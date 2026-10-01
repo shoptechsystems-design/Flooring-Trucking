@@ -39,7 +39,7 @@ function usePageInteractions() {
     let revealObserver;
     if (!prefersReducedMotion && 'IntersectionObserver' in window) {
       const revealTargets = document.querySelectorAll(
-        '.section-heading, .service-card, .flooring-feature, .quote-intro, .lead-form, .freight-showcase, .vehicle-card, .why-card, .process-track, .project-gallery-layout, .review-card, .area-copy, .area-map, .final-cta-inner'
+        '.section-heading, .service-card, .flooring-feature, .quote-intro, .lead-form, .freight-showcase, .vehicle-card, .why-card, .process-track, .project-gallery-layout, .review-group, .area-copy, .area-map, .final-cta-inner'
       );
       revealObserver = new IntersectionObserver((entries, observer) => {
         for (const entry of entries) {
@@ -129,6 +129,7 @@ export default function App() {
       <SiteHeader />
       <main id="main">
         <HeroSection />
+        <CustomerReviewsSection />
         <EquipmentSection />
         <FreightServicesSection />
         <ProcessSection />
@@ -143,7 +144,6 @@ export default function App() {
           onFlooringFieldChange={handleFlooringFieldChange}
         />
         <ProjectGallerySection />
-        <CustomerReviewsSection />
         <FinalCallToAction />
       </main>
       <SiteFooter />

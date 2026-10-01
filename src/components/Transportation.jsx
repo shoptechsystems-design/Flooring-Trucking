@@ -24,11 +24,25 @@ export function HeroSection() {
         <p className="hero-lede">Box truck and Sprinter van transportation for local, regional, expedited and dedicated freight. Based in Winston-Salem, North Carolina.</p>
         <div className="hero-actions">
           <FreightButton />
-          <a className="button button-outline" href="tel:+18176784346">Call 817-678-4346 <span aria-hidden="true">↗</span></a>
+          <a className="button button-outline button-call" href="tel:+13369556193"><span aria-hidden="true">✆</span> Call 336-955-6193</a>
         </div>
-        <div className="hero-footnote">
-          <span className="hero-footnote-icon" aria-hidden="true">⌖</span>
-          <span>Local knowledge. Regional capacity.<br /><b>26-ft yellow box truck + Sprinter van options</b></span>
+        <div className="hero-specs" aria-label="Equipment specifications">
+          <div className="hero-spec">
+            <span className="hero-spec-icon" aria-hidden="true"><VehicleSvg /></span>
+            <div>
+              <h2>26-Ft Box Truck</h2>
+              <ul><li>26 feet long</li><li>Door opening: 96″ W × 96″ H</li></ul>
+              <p>Box truck transportation for local, regional, expedited and dedicated freight.</p>
+            </div>
+          </div>
+          <div className="hero-spec">
+            <span className="hero-spec-icon" aria-hidden="true"><VehicleSvg van /></span>
+            <div>
+              <h2>Sprinter Van</h2>
+              <ul><li>Cargo length: 126″</li><li>Cargo width: 55″</li><li>Cargo height: 72″</li></ul>
+              <p>Sprinter van transportation for smaller and expedited freight.</p>
+            </div>
+          </div>
         </div>
       </div>
       <div className="hero-visual">
@@ -39,16 +53,15 @@ export function HeroSection() {
             width="1600"
             height="1200"
             sizes="(max-width: 620px) calc(100vw - 50px), (max-width: 900px) min(calc(100vw - 64px), 680px), (max-width: 1120px) 42vw, min(44vw, 620px)"
-            alt="Lil Man Big Van's yellow 26-foot box truck, marked MC#1689088 and DOT#4327224, parked in Winston-Salem, NC."
+            alt="Lil Man Big Van's 26-foot box truck, marked MC#1689088 and DOT#4327224, parked in Winston-Salem, NC."
             loading="eager"
             decoding="async"
             fetchPriority="high"
           />
-          <span className="photo-caption"><span className="caption-mark" aria-hidden="true" /> Our 26-ft box truck · USDOT 4327224</span>
         </div>
         <div className="visual-stamp" aria-label="Local and regional transportation"><span>LOCAL</span><i aria-hidden="true" /><span>REGIONAL</span></div>
-        <div className="float-card float-card-top"><span className="float-icon" aria-hidden="true">▰</span><span><b>26 FT BOX TRUCK</b><small>Yellow truck option</small></span></div>
-        <div className="float-card float-card-bottom"><span className="float-icon transport-van-icon" aria-hidden="true">▱</span><span><b>SPRINTER VAN</b><small>Smaller &amp; time-sensitive loads</small></span></div>
+        <div className="float-card float-card-top"><span className="float-icon" aria-hidden="true">▰</span><span><b>26 FT BOX TRUCK</b><small>96″ W × 96″ H door</small></span></div>
+        <div className="float-card float-card-bottom"><span className="float-icon transport-van-icon" aria-hidden="true">▱</span><span><b>SPRINTER VAN</b><small>126″ L cargo area</small></span></div>
       </div>
       <a className="scroll-cue" href="#equipment"><span>Explore equipment</span><i aria-hidden="true">↓</i></a>
     </section>
@@ -67,17 +80,26 @@ export function EquipmentSection() {
         <div className="freight-showcase equipment-showcase">
           <div className="vehicle-grid">
             <article className="vehicle-card vehicle-box tilt-card">
-              <span className="vehicle-label">26-FOOT BOX TRUCK · YELLOW</span>
+              <span className="vehicle-label">26-FOOT BOX TRUCK · HIGH CAPACITY</span>
               <div className="vehicle-icon" aria-hidden="true"><VehicleSvg /></div>
-              <h3>Yellow 26-foot box truck</h3>
-              <p>For large-capacity freight, palletized shipments, local and regional deliveries, expedited transportation and dedicated loads.</p>
+              <h3>26-ft box truck</h3>
+              <dl className="vehicle-specs">
+                <div><dt>Box length</dt><dd>26 ft</dd></div>
+                <div><dt>Door opening</dt><dd>96″ W × 96″ H</dd></div>
+              </dl>
+              <p>Box truck transportation for local, regional, expedited and dedicated freight, including palletized shipments.</p>
               <a href="#freight-form" className="text-link">Ask about box-truck capacity <span aria-hidden="true">→</span></a>
             </article>
             <article className="vehicle-card vehicle-van tilt-card">
               <span className="vehicle-label">SPRINTER VAN · FLEXIBLE OPTION</span>
               <div className="vehicle-icon" aria-hidden="true"><VehicleSvg van /></div>
               <h3>Sprinter van</h3>
-              <p>For expedited freight, smaller and time-sensitive shipments, and local and regional transportation.</p>
+              <dl className="vehicle-specs">
+                <div><dt>Cargo length</dt><dd>126″</dd></div>
+                <div><dt>Cargo width</dt><dd>55″</dd></div>
+                <div><dt>Cargo height</dt><dd>72″</dd></div>
+              </dl>
+              <p>Sprinter van transportation for smaller and expedited freight.</p>
               <a href="#freight-form" className="text-link">Ask about Sprinter capacity <span aria-hidden="true">→</span></a>
             </article>
           </div>
@@ -170,8 +192,8 @@ export function ProcessSection() {
 export function AboutSection() {
   const proof = [
     ['⌖', '01 / HOME BASE', 'Winston-Salem, NC', 'Transportation from a local Triad base, with regional freight service available by route.'],
-    ['▰', '02 / EQUIPMENT', 'Two equipment options', 'A 26-foot yellow box truck and a Sprinter van option for different shipment needs.'],
-    ['↗', '03 / NEXT STEP', 'Talk through the load', 'Use the freight quote form or call 817-678-4346 to share shipment details.'],
+    ['▰', '02 / EQUIPMENT', 'Two equipment options', 'A 26-foot box truck and a Sprinter van option for different shipment needs.'],
+    ['↗', '03 / NEXT STEP', 'Talk through the load', 'Use the freight quote form or call 336-955-6193 to share shipment details.'],
   ];
   return (
     <section className="why-section section-pad transport-about" id="about" aria-labelledby="why-title">

@@ -99,7 +99,7 @@ export function FreightQuoteSection() {
           <p className="eyebrow eyebrow-light"><span className="eyebrow-line" />Request transportation</p>
           <h2 id="freight-quote-title">Let’s move<br />your <em>freight.</em></h2>
           <p>Send the route, equipment request, pickup timing and shipment details for review.</p>
-          <a className="quote-contact" href="tel:+18176784346">Call the freight team <b>817-678-4346</b> <span aria-hidden="true">↗</span></a>
+          <a className="quote-contact" href="tel:+13369556193">Call the freight team <b>336-955-6193</b> <span aria-hidden="true">↗</span></a>
           <p className="quote-email">Or email <a href="mailto:Nathanw.logistics@gmail.com">Nathanw.logistics@gmail.com</a></p>
         </div>
         <LeadForm kind="freight" />

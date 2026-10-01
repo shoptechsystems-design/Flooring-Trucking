@@ -81,12 +81,12 @@ export function SiteFooter() {
         </div>
         <div className="footer-column">
           <b>Reach our team</b>
-          <a href="tel:+18176784346">817-678-4346 · Freight</a><a href="mailto:Nathanw.logistics@gmail.com">Nathanw.logistics@gmail.com</a>
-          <a href="tel:+13369556193">336-955-6193 · Flooring</a><a href="mailto:Lilman.bigvan@gmail.com">Lilman.bigvan@gmail.com</a>
+          <a href="tel:+13369556193">336-955-6193</a>
+          <a href="mailto:Nathanw.logistics@gmail.com">Nathanw.logistics@gmail.com</a><a href="mailto:Lilman.bigvan@gmail.com">Lilman.bigvan@gmail.com</a>
         </div>
         <div className="footer-location">
           <b>Flooring For All LLC</b>
-          <address>DBA Lil Man Big Van<br />4175 Smith Farm Ln<br />Winston-Salem, NC 27107</address>
+          <address>DBA Lil Man Big Van<br />4175 Smith Farm Lane<br />Winston-Salem, NC 27107</address>
           <span>USDOT 4327224 · MC-1689088</span>
           <span>Transportation serving the Triad and regional freight lanes.</span>
           <a className="footer-up" href="#home">Back to top ↑</a>
@@ -104,7 +104,7 @@ export function SiteFooter() {
 export function MobileActions() {
   return (
     <div className="mobile-actions" aria-label="Quick actions">
-      <a href="tel:+18176784346"><span aria-hidden="true">⌕</span> Call freight</a>
+      <a href="tel:+13369556193"><span aria-hidden="true">✆</span> Call 336-955-6193</a>
       <a href="#freight-form"><span aria-hidden="true">↗</span> Get a freight quote</a>
     </div>
   );

@@ -131,7 +131,7 @@ html{scroll-padding-top:94px}
 .final-cta .button-copper{background:var(--freight-gold);color:#172422}
 .final-cta .button-light-outline{border-color:rgba(169,215,210,.52);color:#d6e4df}
 .final-cta .button-light-outline:hover{border-color:var(--freight-cyan);background:rgba(169,215,210,.08)}
-.contact-lines a[href^="tel:+1817"],.contact-lines a[href^="mailto:Nathan"]{color:#f1d477}
+.contact-lines a[href^="tel:+1336"],.contact-lines a[href^="mailto:Nathan"]{color:#f1d477}
 .footer-brand .brand-copy small{color:#becdbf}
 .footer-column a:hover,.footer-location a:hover{color:var(--freight-gold)}
 
@@ -237,3 +237,63 @@ html{scroll-padding-top:94px}
 }
 .footer-location>address{color:#bdc9c2;font-size:10px;font-style:normal;line-height:1.55}
 .contact-address{margin-top:12px;color:#d4ded7;font-size:10px;letter-spacing:.02em}
+/* Call-to-action phone buttons */
+.hero-transport .button-call{border-color:rgba(232,199,100,.6);color:#fff;font-weight:700}
+.hero-transport .button-call:hover{border-color:var(--freight-gold);background:rgba(232,199,100,.1)}
+.contact-lines .contact-phone{color:#f1d477;font-size:13px;font-weight:700}
+/* Vehicle specifications */
+.vehicle-specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:0 0 16px;padding:0}
+.vehicle-specs div{padding:10px 12px;border:1px solid var(--freight-line);border-radius:12px;background:rgba(7,26,28,.35)}
+.vehicle-specs dt{margin:0 0 3px;color:#b9c9c3;font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.vehicle-specs dd{margin:0;color:#fff;font:700 17px var(--display);letter-spacing:-.02em}
+.vehicle-box .vehicle-specs dd{color:var(--freight-gold)}
+.vehicle-van .vehicle-specs dd{color:var(--freight-cyan)}
+/* Hero equipment specs */
+.hero-specs{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:26px;max-width:620px}
+.hero-spec{display:flex;align-items:flex-start;gap:12px;padding-right:16px}
+.hero-spec+.hero-spec{padding:0 0 0 16px;border-left:1px solid var(--freight-line)}
+.hero-spec-icon{display:grid;place-items:center;width:44px;height:44px;flex:none;border:1px solid rgba(232,199,100,.5);border-radius:50%;color:var(--freight-gold)}
+.hero-spec-icon svg{width:24px;height:20px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.hero-spec h2{margin:2px 0 5px;color:#fff;font:700 14px var(--display);letter-spacing:-.01em}
+.hero-spec ul{margin:0 0 6px;padding-left:15px;color:#e4ece6;font-size:11px;line-height:1.6}
+.hero-spec p{margin:0;color:#b8c6c1;font-size:10px;line-height:1.5}
+/* Shipper / broker reviews */
+.review-groups{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.review-group{display:flex;flex-direction:column;gap:14px;padding:22px;border:1px solid rgba(255,255,255,.18);border-radius:22px;background:rgba(14,43,46,.7)}
+.review-group-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.review-group-head h3{margin:0;color:#fff;font-size:clamp(20px,2.2vw,26px);font-weight:600;letter-spacing:-.04em}
+.review-group-head span{color:#93a39c;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.review-quotes{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.review-quote{padding:16px 18px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(7,26,28,.45)}
+.review-quote.is-placeholder{border-style:dashed}
+.review-quote-head{display:flex;align-items:center;gap:13px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.12)}
+.review-quote-head>div{display:flex;flex-direction:column;gap:2px}
+.review-group-icon{display:grid;place-items:center;width:48px;height:48px;flex:none;border-radius:50%}
+.review-group-icon svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.review-group-icon-shipper{border:1px solid rgba(110,200,150,.5);background:#164a35;color:#e6f5e9}
+.review-group-icon-broker{border:1px solid rgba(120,160,230,.5);background:#183f78;color:#e3ecfb}
+.review-company{color:#fff;font-size:14px;font-weight:700}
+.is-placeholder .review-company{color:var(--freight-gold);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.review-company-type{color:#b8c6c1;font-size:11px}
+.review-stars{display:flex;align-items:center;gap:7px;color:#f5b301;font-size:16px;letter-spacing:1px}
+.review-stars b{color:#fff;font-size:12px;letter-spacing:0}
+.review-quote blockquote{margin:0 0 10px;color:#eef3ee;font-size:14px;line-height:1.55}
+.review-location{display:flex;align-items:center;gap:6px;margin:0;color:#b8c6c1;font-size:11px}
+.review-location span{color:var(--freight-gold)}
+.review-group .review-action{align-self:flex-start;margin-top:auto;color:var(--freight-gold)}
+.review-call{display:flex;justify-content:center;width:100%;margin-top:18px;background:var(--freight-gold);color:#172422;font-size:15px;font-weight:700}
+@media(max-width:900px){.review-groups{grid-template-columns:1fr}}
+@media(max-width:620px){
+  .hero-transport .hero-actions>.button{width:100%;justify-content:center}
+  .hero-transport .hero-photo-frame{aspect-ratio:4/3}
+  .hero-spec{gap:9px;padding-right:10px}
+  .hero-spec+.hero-spec{padding-left:10px}
+  .hero-spec-icon{width:36px;height:36px}
+  .hero-spec-icon svg{width:19px;height:16px}
+  .hero-spec h2{font-size:12px}
+  .hero-spec ul{padding-left:13px;font-size:10px}
+  .hero-spec p{font-size:9px}
+  .review-group{padding:16px}
+  .review-quote blockquote{font-size:13px}
+}
+.mock-reviews-note{margin:0 0 14px;padding:8px 12px;border:1px dashed rgba(233,128,96,.6);border-radius:10px;color:var(--freight-orange);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
