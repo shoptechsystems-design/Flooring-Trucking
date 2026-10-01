@@ -59,28 +59,6 @@ const reviewGroups = [
   },
 ];
 
-// Mock reviews for previewing the design locally. These render ONLY in the local dev
-// server (`pnpm dev`) — never in the prerendered HTML or the production build — so no
-// invented review is ever published. Replace `reviewGroups` with real reviews to go live.
-const SHOW_MOCK_REVIEWS = import.meta.env.DEV && !import.meta.env.SSR;
-
-const mockReviewGroups = [
-  {
-    ...reviewGroups[0],
-    reviews: [
-      { company: 'Triad Manufacturing Co.', type: 'Manufacturer', rating: 5, quote: 'Great communication, on-time pickup and delivery. Professional, reliable and easy to work with. Highly recommend!', location: 'Winston-Salem, NC', placeholder: false },
-      { company: 'Piedmont Supply Group', type: 'Shipper', rating: 5, quote: 'Clear updates from pickup to drop-off. The load arrived on schedule and in good condition.', location: 'Greensboro, NC', placeholder: false },
-    ],
-  },
-  {
-    ...reviewGroups[1],
-    reviews: [
-      { company: 'Carolina Freight Solutions', type: 'Broker', rating: 5, quote: 'Reliable carrier, responsive communication, and smooth pickup and delivery. Will definitely work with again.', location: 'Charlotte, NC', placeholder: false },
-      { company: 'Queen City Logistics', type: 'Broker', rating: 5, quote: 'Answers the phone, confirms details quickly and keeps the load moving.', location: 'Charlotte, NC', placeholder: false },
-    ],
-  },
-];
-
 function ReviewIcon({ type }) {
   return type === 'broker'
     ? <svg viewBox="0 0 48 48"><path d="M5 22l8-8 7 3 5-3 6 2 6-2 6 8M11 28l7 7c1.5 1.5 3.5 1.5 5 0l1-1 1 1c1.5 1.5 3.5 1.5 5 0l6-6M18 22l5 5M23 20l6 6" /></svg>
@@ -104,9 +82,8 @@ export function CustomerReviewsSection() {
           <div><p className="eyebrow"><span className="eyebrow-line" />Reviews</p><h2 id="reviews-title">Shippers and brokers.<br /><em>On the record.</em></h2></div>
           <p className="heading-aside">Feedback from the manufacturers, shippers and brokers we haul for around Winston-Salem, the Triad and Charlotte.</p>
         </div>
-        {SHOW_MOCK_REVIEWS && <p className="mock-reviews-note">Mock review data · local preview only · not shown on the live site</p>}
         <div className="review-groups">
-          {(SHOW_MOCK_REVIEWS ? mockReviewGroups : reviewGroups).map((group) => (
+          {reviewGroups.map((group) => (
             <section className={`review-group review-group-${group.id}`} key={group.id} aria-labelledby={`${group.id}-reviews-title`}>
               <div className="review-group-head">
                 <h3 id={`${group.id}-reviews-title`}>{group.title}</h3>
