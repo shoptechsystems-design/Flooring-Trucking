@@ -85,13 +85,15 @@ export function SiteFooter() {
           <a href="tel:+13369556193">336-955-6193 · Flooring</a><a href="mailto:Lilman.bigvan@gmail.com">Lilman.bigvan@gmail.com</a>
         </div>
         <div className="footer-location">
-          <b>Winston-Salem, North Carolina</b>
+          <b>Flooring For All LLC</b>
+          <address>DBA Lil Man Big Van<br />4175 Smith Farm Ln<br />Winston-Salem, NC 27107</address>
+          <span>USDOT 4327224 · MC-1689088</span>
           <span>Transportation serving the Triad and regional freight lanes.</span>
           <a className="footer-up" href="#home">Back to top ↑</a>
         </div>
       </div>
       <div className="section-shell footer-bottom">
-        <span>© <span id="year">{new Date().getFullYear()}</span> Flooring For All DBA Lil Man Big Van</span>
+        <span>© <span id="year">{new Date().getFullYear()}</span> Flooring For All LLC DBA Lil Man Big Van</span>
         <span>DBA means “doing business as.”</span>
         <span>Built on local knowledge. Ready for what’s next.</span>
       </div>

@@ -235,3 +235,5 @@ html{scroll-padding-top:94px}
 @media(prefers-reduced-motion:reduce){
   .hero-transport .hero-photo-frame,.service-grid-transport .service-card,.vehicle-card,.process-track,.why-card{transition:none!important}
 }
+.footer-location>address{color:#bdc9c2;font-size:10px;font-style:normal;line-height:1.55}
+.contact-address{margin-top:12px;color:#d4ded7;font-size:10px;letter-spacing:.02em}

@@ -83,6 +83,7 @@ export function FinalCallToAction() {
           <a href="tel:+13369556193">336-955-6193 · Flooring</a><span className="contact-line-break" aria-hidden="true">—</span>
           <a href="mailto:Nathanw.logistics@gmail.com">Nathanw.logistics@gmail.com</a><a href="mailto:Lilman.bigvan@gmail.com">Lilman.bigvan@gmail.com</a>
         </div>
+        <p className="contact-address">4175 Smith Farm Ln, Winston-Salem, NC 27107 · USDOT 4327224 · MC-1689088</p>
       </div>
     </section>
   );

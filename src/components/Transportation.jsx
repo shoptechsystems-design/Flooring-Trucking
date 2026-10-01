@@ -35,16 +35,16 @@ export function HeroSection() {
         <div className="visual-backplate" aria-hidden="true" />
         <div className="hero-photo-frame">
           <img
-            src="/manus-storage/async-images/88czKL4eumaobPy5b8YvaF/image-1.webp"
-            width="1024"
-            height="768"
+            src="/images/lil-man-big-van-box-truck.jpg"
+            width="1600"
+            height="1200"
             sizes="(max-width: 620px) calc(100vw - 50px), (max-width: 900px) min(calc(100vw - 64px), 680px), (max-width: 1120px) 42vw, min(44vw, 620px)"
-            alt="Illustrative concept render of an unbranded yellow 26-foot box truck; not a photo of the client's fleet."
+            alt="Lil Man Big Van's yellow 26-foot box truck, marked MC#1689088 and DOT#4327224, parked in Winston-Salem, NC."
             loading="eager"
             decoding="async"
             fetchPriority="high"
           />
-          <span className="photo-caption"><span className="caption-mark" aria-hidden="true" /> Illustrative vehicle — not client fleet photo.</span>
+          <span className="photo-caption"><span className="caption-mark" aria-hidden="true" /> Our 26-ft box truck · USDOT 4327224</span>
         </div>
         <div className="visual-stamp" aria-label="Local and regional transportation"><span>LOCAL</span><i aria-hidden="true" /><span>REGIONAL</span></div>
         <div className="float-card float-card-top"><span className="float-icon" aria-hidden="true">▰</span><span><b>26 FT BOX TRUCK</b><small>Yellow truck option</small></span></div>
