@@ -47,17 +47,31 @@ export function HeroSection() {
       </div>
       <div className="hero-visual">
         <div className="visual-backplate" aria-hidden="true" />
-        <div className="hero-photo-frame">
-          <img
-            src="/images/lil-man-big-van-box-truck.jpg"
-            width="1600"
-            height="1200"
-            sizes="(max-width: 620px) calc(100vw - 50px), (max-width: 900px) min(calc(100vw - 64px), 680px), (max-width: 1120px) 42vw, min(44vw, 620px)"
-            alt="Lil Man Big Van's 26-foot box truck, marked MC#1689088 and DOT#4327224, parked in Winston-Salem, NC."
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-          />
+        <div className="hero-photo-frame hero-dual-frame">
+          <div className="hero-vehicle-pane hero-pane-truck">
+            <img
+              src="/images/lil-man-big-van-box-truck.jpg"
+              width="1600"
+              height="1200"
+              sizes="(max-width: 620px) calc(100vw - 50px), (max-width: 900px) min(calc(100vw - 64px), 680px), (max-width: 1120px) 42vw, min(44vw, 620px)"
+              alt="Lil Man Big Van's 26-foot box truck, marked MC#1689088 and DOT#4327224, parked in Winston-Salem, NC."
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
+          </div>
+          <div className="hero-pane-divider" aria-hidden="true" />
+          <div className="hero-vehicle-pane hero-pane-van">
+            <img
+              src="/images/lil-man-big-van-sprinter-hd.jpg"
+              width="1200"
+              height="900"
+              sizes="(max-width: 620px) calc(100vw - 50px), (max-width: 900px) min(calc(100vw - 64px), 680px), (max-width: 1120px) 42vw, min(44vw, 620px)"
+              alt="Lil Man Big Van's Sprinter van for smaller and expedited freight."
+              loading="eager"
+              decoding="async"
+            />
+          </div>
         </div>
         <div className="visual-stamp" aria-label="Local and regional transportation"><span>LOCAL</span><i aria-hidden="true" /><span>REGIONAL</span></div>
         <div className="float-card float-card-top"><span className="float-icon" aria-hidden="true">▰</span><span><b>26 FT BOX TRUCK</b><small>96″ W × 96″ H door</small></span></div>
