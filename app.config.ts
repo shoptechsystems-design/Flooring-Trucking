@@ -1,3 +1,3 @@
 export default {
-  logoUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663930986638/AfaSMCTgTFCpPjPi.png",
+  logoUrl: "https://lilman-nshfmbfl.manus.space/images/logo/lil-man-big-van-logo.png",
 };

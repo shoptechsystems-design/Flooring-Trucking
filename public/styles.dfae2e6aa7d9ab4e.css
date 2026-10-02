@@ -59,7 +59,7 @@ h1,h2,h3{font-family:var(--display)}
 .site-header{position:sticky;top:0;z-index:50;background:rgba(8,29,30,.94);color:var(--white);border-bottom:1px solid rgba(255,255,255,.09);backdrop-filter:blur(18px)}
 .header-inner{position:relative;width:min(calc(100% - 72px),var(--content));height:82px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:26px}
 .brand{display:flex;align-items:center;gap:12px;min-width:215px}
-.brand-mark{width:46px;height:46px;flex:none;object-fit:contain;border-radius:13px;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.brand-mark{width:58px;height:58px;flex:none;object-fit:contain;border-radius:50%;box-shadow:0 0 0 1.5px rgba(245,244,239,.22),0 4px 16px rgba(0,0,0,.28)}
 .brand-copy{display:grid;gap:3px;line-height:1.05}
 .brand-copy strong{font:700 16px/1.1 var(--display);letter-spacing:-.045em;color:var(--white)}
 .brand-copy small{font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:#9fac9e}
@@ -318,6 +318,7 @@ h1,h2,h3{font-family:var(--display)}
 .site-footer{padding:57px 0 17px;background:#061719;color:var(--white)}
 .footer-main{display:grid;grid-template-columns:1.3fr .9fr 1.1fr .95fr;gap:32px;padding-bottom:35px}
 .brand-footer{min-width:0}
+.brand-footer .brand-mark{width:76px;height:76px}
 .footer-brand>p{margin:16px 0 0;color:#9fb0a8;font-size:10px;line-height:1.8}
 .footer-column,.footer-location{display:flex;flex-direction:column;align-items:flex-start;gap:9px}
 .footer-column>b,.footer-location>b{margin-bottom:4px;color:var(--lime);font:700 10px var(--display);letter-spacing:.08em;text-transform:uppercase}
@@ -346,6 +347,7 @@ h1,h2,h3{font-family:var(--display)}
 }
 @media(max-width:900px){
   .header-inner{height:74px}
+  .brand-mark{width:52px;height:52px}
   .menu-toggle{position:relative;z-index:3;display:flex;width:46px;height:44px;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1px solid rgba(255,255,255,.3);border-radius:14px;background:rgba(255,255,255,.04);color:#fff;cursor:pointer}
   .menu-toggle span{width:17px;height:2px;border-radius:2px;background:currentColor;transition:transform .2s}
   .menu-toggle[aria-expanded=true] span:first-child{transform:translateY(4px) rotate(45deg)}
@@ -388,7 +390,8 @@ h1,h2,h3{font-family:var(--display)}
   .announcement{height:30px;gap:7px;font-size:7px;letter-spacing:.1em}
   .header-inner{height:68px}
   .brand{min-width:0;gap:9px}
-  .brand-mark{width:40px;height:40px;border-radius:11px}
+  .brand-mark{width:46px;height:46px}
+  .brand-footer .brand-mark{width:64px;height:64px}
   .brand-copy strong{font-size:14px}
   .brand-copy small{font-size:8px}
   .menu-toggle{width:42px;height:41px}

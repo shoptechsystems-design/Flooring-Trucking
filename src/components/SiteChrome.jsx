@@ -36,7 +36,7 @@ export function SiteHeader() {
       <header className="site-header">
         <div className="header-inner">
           <a className="brand" href="#home" aria-label="Flooring For All DBA Lil Man Big Van home" onClick={closeMenu}>
-            <img className="brand-mark" src="/site-icon.svg" width="44" height="44" alt="" />
+            <img className="brand-mark" src="/images/logo/lil-man-big-van-logo-192.png" width="58" height="58" alt="" />
             <span className="brand-copy"><strong>Lil Man Big Van</strong><small>Transportation · Winston-Salem, NC</small></span>
           </a>
           <button
@@ -69,7 +69,7 @@ export function SiteFooter() {
       <div className="section-shell footer-main">
         <div className="footer-brand">
           <a className="brand brand-footer" href="#home">
-            <img className="brand-mark" src="/site-icon.svg" width="42" height="42" alt="" />
+            <img className="brand-mark" src="/images/logo/lil-man-big-van-logo-192.png" width="76" height="76" alt="" loading="lazy" decoding="async" />
             <span className="brand-copy"><strong>Lil Man Big Van</strong><small>Flooring For All DBA</small></span>
           </a>
           <p>Reliable. Local. Professional.<br />Transportation first. Flooring services presented separately.</p>
