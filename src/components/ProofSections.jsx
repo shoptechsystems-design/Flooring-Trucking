@@ -21,54 +21,54 @@ export function ProjectGallerySection() {
           </div>
 
           <p className="heading-aside">
-            We’re saving this space for genuine Flooring For All project
-            photos. No stock or illustrative images are presented as completed
-            customer work.
+            Recent Flooring For All projects, photographed by our team. More
+            jobs will be added here as they’re completed.
           </p>
         </div>
 
         <div className="project-gallery-layout">
-          <div className="project-gallery-stage" aria-hidden="true">
-            <div className="gallery-stage-grid" />
+          <div className="gallery-mosaic">
+            <figure className="gallery-photo gallery-photo-main">
+              <img
+                src="/images/gallery/lvp-living-room.webp"
+                width="714"
+                height="960"
+                alt="Living room with wood-look LVP flooring installed by Flooring For All"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>
+                <i />
+                Flooring For All project
+              </figcaption>
+            </figure>
 
-            <div className="gallery-floor-slab gallery-floor-slab-back" />
-            <div className="gallery-floor-slab gallery-floor-slab-front" />
+            <figure className="gallery-photo">
+              <img
+                src="/images/gallery/lvp-empty-room.webp"
+                width="713"
+                height="457"
+                alt="Empty room with newly installed light oak LVP flooring and leftover planks"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
 
-            <div className="gallery-empty-card">
-              <span className="gallery-empty-icon">
-                <svg viewBox="0 0 48 48">
-                  <rect
-                    x="7"
-                    y="10"
-                    width="34"
-                    height="28"
-                    rx="5"
-                  />
-                  <circle cx="18" cy="20" r="3" />
-                  <path d="m11 33 9-8 6 5 5-4 6 7" />
-                </svg>
-              </span>
-
-              <small>PROJECT GALLERY</small>
-
-              <b>
-                Awaiting real
-                <br />
-                project photos
-              </b>
-
-              <span>NO CUSTOMER IMAGES PUBLISHED</span>
-            </div>
-
-            <div className="gallery-stage-tag">
-              <i />
-              AUTHENTIC PROJECTS ONLY
-            </div>
+            <figure className="gallery-photo">
+              <img
+                src="/images/gallery/lvp-kitchen-dining.webp"
+                width="713"
+                height="458"
+                alt="Open kitchen, dining and living area with continuous LVP flooring"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
           </div>
 
-          <div className="gallery-empty-copy">
+          <div className="gallery-copy">
             <span className="gallery-status">
-              PORTFOLIO / READY FOR REAL JOBS
+              PORTFOLIO / RECENT WORK
             </span>
 
             <h3>
@@ -78,9 +78,9 @@ export function ProjectGallerySection() {
             </h3>
 
             <p>
-              Project photos haven’t been supplied for publication yet. When
-              approved images are available, this gallery can show real
-              installs, removals and before/after details.
+              Wood-look LVP carried through living rooms, kitchens and open
+              floor plans. Planning something similar? Tell us about your space
+              and we’ll put together a free estimate.
             </p>
 
             <ul className="gallery-service-tags">
@@ -89,17 +89,10 @@ export function ProjectGallerySection() {
               <li>Subfloor preparation</li>
             </ul>
 
-            <a
-              className="button button-dark"
-              href="mailto:Lilman.bigvan@gmail.com?subject=Project%20gallery%20photos%20for%20Flooring%20For%20All"
-            >
-              Share approved photos{" "}
+            <a className="button button-dark" href="#flooring-form">
+              Get a free flooring estimate{" "}
               <span aria-hidden="true">↗</span>
             </a>
-
-            <small className="gallery-privacy-note">
-              Attach only images the team has permission to publish.
-            </small>
           </div>
         </div>
       </div>
