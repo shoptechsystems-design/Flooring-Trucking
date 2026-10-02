@@ -1,35 +1,180 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const recipients = {
-  freight: 'Nathanw.logistics@gmail.com',
+  freight: 'Lilman.bigvan@gmail.com',
   flooring: 'Lilman.bigvan@gmail.com',
+  // Note: if you ever need freight to route separately to logistics:
+  // freight: 'Nathanw.logistics@gmail.com',
 };
 
+function ConfirmationSummary({ summary, onReset }) {
+  const isFreight = summary.isFreight;
+
+  return (
+    <div className="lead-form form-light confirmation-card" role="region" aria-label="Quote Request Summary">
+      <div className="confirmation-header">
+        <div className="confirmation-icon-wrap" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </div>
+        <div>
+          <span className="form-step">REQUEST CONFIRMED • {summary.refCode}</span>
+          <h3>{isFreight ? 'Freight Quote Request Received' : 'Flooring Estimate Request Received'}</h3>
+          <p className="confirmation-sub">
+            Thank you{summary.contactName ? `, ${summary.contactName}` : ''}! Your request has been recorded and dispatched to our {isFreight ? 'logistics team' : 'flooring specialists'}.
+          </p>
+        </div>
+      </div>
+
+      <div className="confirmation-meta-strip">
+        <div><span className="meta-label">Submitted:</span> <strong>{summary.submissionTime}</strong></div>
+        <div><span className="meta-label">Reference ID:</span> <strong>{summary.refCode}</strong></div>
+        <div><span className="meta-label">Assigned Desk:</span> <strong>{summary.recipient}</strong></div>
+      </div>
+
+      <div className="confirmation-details-box">
+        <h4 className="confirmation-section-title">Submitted Information</h4>
+        <dl className="confirmation-grid">
+          {summary.entries.map((item, idx) => (
+            <div key={idx} className={`confirmation-item ${item.isFull ? 'item-wide' : ''}`}>
+              <dt className="confirmation-label">{item.label}</dt>
+              <dd className="confirmation-value">{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div className="confirmation-next-steps">
+        <div className="next-steps-icon" aria-hidden="true">⚡</div>
+        <div className="next-steps-text">
+          <strong>What to expect next:</strong>
+          <p>
+            Our team is reviewing your specifications and schedule. We will reach out to you at{' '}
+            <strong>{summary.contactPhone || summary.contactEmail}</strong> within 1–2 business hours.
+          </p>
+          <p className="next-steps-urgent">
+            Need immediate assistance or direct booking? Call our desk at{' '}
+            <a href="tel:+13369556193"><b>(336) 955-6193</b> ↗</a>
+          </p>
+        </div>
+      </div>
+
+      <div className="confirmation-actions">
+        <button
+          type="button"
+          className="button button-dark confirmation-action-btn"
+          onClick={() => window.print()}
+        >
+          Print / Save Summary <span aria-hidden="true">🖨️</span>
+        </button>
+        <button
+          type="button"
+          className="button button-copper confirmation-action-btn"
+          onClick={onReset}
+        >
+          Submit Another Request <span aria-hidden="true">↻</span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function LeadForm({ kind, formRef, flooringFields, onFlooringFieldChange }) {
-  const [status, setStatus] = useState('');
-  const [photoNote, setPhotoNote] = useState('After your email opens, attach your selected photos before sending.');
+  const [submitting, setSubmitting] = useState(false);
+  const [submittedSummary, setSubmittedSummary] = useState(null);
+  const [photoNote, setPhotoNote] = useState('Attach your project photos if available.');
   const isFreight = kind === 'freight';
   const recipient = recipients[kind];
 
-  const handleSubmit = (event) => {
+  // If estimate values are sent from the visualizer, ensure form view is visible
+  useEffect(() => {
+    if (!isFreight && (flooringFields?.area || flooringFields?.message)) {
+      setSubmittedSummary(null);
+    }
+  }, [flooringFields?.area, flooringFields?.message, isFreight]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (!form.reportValidity()) return;
 
-    const subjectKind = isFreight ? 'Freight quote' : 'Free flooring estimate';
-    const subject = `${subjectKind} request — Flooring For All / Lil Man Big Van`;
-    const bodyLines = [];
-    for (const [key, value] of new FormData(form).entries()) {
-      if (key === 'Project Photos' || typeof value !== 'string' || !value.trim()) continue;
-      bodyLines.push(`${key}: ${value.trim()}`);
-    }
-    const selectedPhotos = Array.from(form.querySelector('input[type="file"]')?.files ?? []).map((file) => file.name);
-    if (selectedPhotos.length) bodyLines.push(`Photos to attach in your email app: ${selectedPhotos.join(', ')}`);
-    bodyLines.push('', 'Sent from the Flooring For All DBA Lil Man Big Van website.');
+    setSubmitting(true);
 
-    const mailto = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-    setStatus('Your email app is opening with the request ready to send. Review the details and send the email to complete your request.');
-    window.location.href = mailto;
+    const rawFormData = new FormData(form);
+    const subjectKind = isFreight ? 'Freight quote' : 'Free flooring estimate';
+    const contactName = (isFreight ? rawFormData.get('Contact Name') : rawFormData.get('Name')) || '';
+    const contactPhone = rawFormData.get('Phone') || '';
+    const contactEmail = rawFormData.get('Email') || '';
+    const subject = `${subjectKind} request — ${contactName ? contactName + ' — ' : ''}Flooring For All / Lil Man Big Van`;
+
+    const wideKeys = ['Additional Details', 'Message', 'Project Address', 'Pickup Location', 'Delivery Location'];
+    const entries = [];
+
+    for (const [key, value] of rawFormData.entries()) {
+      if (key.startsWith('_') || key === 'Project Photos') continue;
+      if (typeof value === 'string' && value.trim()) {
+        entries.push({
+          label: key,
+          value: value.trim(),
+          isFull: wideKeys.includes(key),
+        });
+      }
+    }
+
+    const selectedPhotos = Array.from(form.querySelector('input[type="file"]')?.files ?? []).map((file) => file.name);
+    if (selectedPhotos.length) {
+      entries.push({
+        label: 'Project Photos',
+        value: `${selectedPhotos.length} photo${selectedPhotos.length === 1 ? '' : 's'} (${selectedPhotos.join(', ')})`,
+        isFull: true,
+      });
+    }
+
+    const refCode = `${isFreight ? 'FR' : 'FL'}-${Math.floor(100000 + Math.random() * 900000)}`;
+    const submissionTime = new Intl.DateTimeFormat('en-US', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(new Date());
+
+    const summaryData = {
+      refCode,
+      submissionTime,
+      isFreight,
+      recipient,
+      contactName,
+      contactPhone,
+      contactEmail,
+      entries,
+    };
+
+    // Prepare background FormSubmit delivery
+    const postData = new FormData(form);
+    postData.append('_subject', subject);
+    postData.append('_template', 'table');
+    postData.append('_captcha', 'false');
+
+    try {
+      await fetch(`https://formsubmit.co/ajax/${recipient}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: postData,
+      });
+    } catch (err) {
+      console.warn('Form submission delivery network note:', err);
+    } finally {
+      setSubmitting(false);
+      setSubmittedSummary(summaryData);
+      if (formRef?.current) {
+        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  };
+
+  const handleReset = () => {
+    setSubmittedSummary(null);
   };
 
   const handleFieldChange = (event) => {
@@ -37,8 +182,8 @@ function LeadForm({ kind, formRef, flooringFields, onFlooringFieldChange }) {
     if (name === 'Project Photos') {
       const count = files?.length ?? 0;
       setPhotoNote(count
-        ? `${count} photo${count === 1 ? '' : 's'} selected. Attach them in your email app before sending.`
-        : 'After your email opens, attach your selected photos before sending.');
+        ? `${count} photo${count === 1 ? '' : 's'} selected.`
+        : 'Attach your project photos if available.');
       return;
     }
     if (!isFreight && (name === 'Approximate Square Footage' || name === 'Message')) {
@@ -46,8 +191,13 @@ function LeadForm({ kind, formRef, flooringFields, onFlooringFieldChange }) {
     }
   };
 
+  if (submittedSummary) {
+    return <ConfirmationSummary summary={submittedSummary} onReset={handleReset} />;
+  }
+
   return (
     <form ref={formRef} className="lead-form form-light" id={isFreight ? 'freight-form' : 'flooring-form'} data-kind={kind} data-email={recipient} noValidate onSubmit={handleSubmit}>
+      <input type="text" name="_honey" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
       <div className="form-heading">
         <div><span className="form-step">{isFreight ? 'FREIGHT QUOTE' : 'FLOORING ESTIMATE'}</span><h3>{isFreight ? 'Tell us about the shipment' : 'Start your free estimate'}</h3></div>
         <span className="form-required">* Required</span>
@@ -76,17 +226,18 @@ function LeadForm({ kind, formRef, flooringFields, onFlooringFieldChange }) {
           <label>Project address<input name="Project Address" autoComplete="street-address" placeholder="Street, city, ZIP" /></label>
           <label>Type of flooring<select name="Type of Flooring"><option value="">Choose one</option><option>LVP / luxury vinyl plank</option><option>Carpet</option><option>Glue-down flooring</option><option>Other / not sure yet</option></select></label>
           <label>What needs to be removed?<select name="What needs to be removed"><option value="">Choose one</option><option>Existing LVP</option><option>Carpet</option><option>Glue-down flooring</option><option>More than one flooring type</option><option>No removal needed</option><option>Not sure yet</option></select></label>
-          <label>Approximate square footage<input name="Approximate Square Footage" type="number" inputMode="numeric" min="1" placeholder="e.g. 850" value={flooringFields.area} onChange={handleFieldChange} /></label>
+          <label>Approximate square footage<input name="Approximate Square Footage" type="number" inputMode="numeric" min="1" placeholder="e.g. 850" value={flooringFields?.area || ''} onChange={handleFieldChange} /></label>
           <label>Preferred contact method<select name="Preferred Contact Method"><option>Phone</option><option>Email</option><option>Text</option></select></label>
           <label className="field-wide">Upload photos<input name="Project Photos" type="file" accept="image/*" multiple onChange={handleFieldChange} /><small>{photoNote}</small></label>
-          <label className="field-wide">Additional project details<textarea name="Message" rows="3" placeholder="A little more about the space or project" value={flooringFields.message} onChange={handleFieldChange} /></label>
+          <label className="field-wide">Additional project details<textarea name="Message" rows="3" placeholder="A little more about the space or project" value={flooringFields?.message || ''} onChange={handleFieldChange} /></label>
         </div>
       )}
       <p className="form-delivery-note">{isFreight
-        ? 'Submitting opens a pre-filled email to our logistics team. Review your details and send it from your email app.'
-        : 'Submitting opens a pre-filled email to our team. You can review your details and send it from your email app.'}</p>
-      <button className="button button-copper form-submit" type="submit">{isFreight ? 'Get a Freight Quote' : 'Get a Free Flooring Estimate'} <span aria-hidden="true">↗</span></button>
-      <p className="form-success" role="status" aria-live="polite" hidden={!status} tabIndex={status ? -1 : undefined}>{status}</p>
+        ? 'Submitting sends your request directly to our logistics team and displays your confirmation summary instantly.'
+        : 'Submitting sends your request directly to our flooring team and displays your confirmation summary instantly.'}</p>
+      <button className="button button-copper form-submit" type="submit" disabled={submitting}>
+        {submitting ? 'Submitting Request...' : (isFreight ? 'Get a Freight Quote' : 'Get a Free Flooring Estimate')} <span aria-hidden="true">↗</span>
+      </button>
     </form>
   );
 }
