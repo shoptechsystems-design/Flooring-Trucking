@@ -30,21 +30,21 @@ html{scroll-padding-top:94px}
 .hero-transport .button-copper:hover{background:#f5dc8d}
 .hero-transport .hero-photo-frame{height:auto;min-height:0;aspect-ratio:4/3;border:1px solid rgba(240,229,197,.8);border-radius:27px;background:#0d2627;box-shadow:0 38px 84px rgba(0,0,0,.4),0 0 0 9px rgba(255,255,255,.03);transform:rotateY(-5deg) rotateX(1deg);display:flex;flex-direction:column;overflow:hidden}
 .hero-transport .hero-photo-frame>img{object-fit:cover;object-position:center}
-.hero-transport .hero-dual-frame{display:flex;flex-direction:column;overflow:hidden;position:relative}
-.hero-transport .hero-vehicle-pane{position:relative;flex:1 1 50%;height:50%;width:100%;overflow:hidden;background:#0d2627}
+.hero-transport .hero-photo-frame.hero-dual-frame{display:flex;flex-direction:row;aspect-ratio:auto;overflow:hidden;position:relative}
+.hero-transport .hero-vehicle-pane{position:relative;flex:1 1 0;min-width:0;aspect-ratio:4/3;overflow:hidden;background:#0d2627}
 .hero-transport .hero-vehicle-pane>img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease}
-.hero-transport .hero-pane-truck>img{object-position:center 50%}
-.hero-transport .hero-pane-van>img{object-position:center 60%}
+.hero-transport .hero-pane-truck>img{object-position:center}
+.hero-transport .hero-pane-van>img{object-position:center}
 .hero-transport .hero-photo-frame:hover .hero-pane-truck>img{transform:scale(1.025)}
 .hero-transport .hero-photo-frame:hover .hero-pane-van>img{transform:scale(1.025)}
-.hero-transport .hero-pane-divider{position:relative;z-index:4;height:3px;background:linear-gradient(90deg,rgba(232,199,100,.15),rgba(232,199,100,.85) 30%,rgba(232,199,100,.85) 70%,rgba(232,199,100,.15));box-shadow:0 0 12px rgba(232,199,100,.35)}
+.hero-transport .hero-pane-divider{position:relative;z-index:4;flex:none;width:3px;background:linear-gradient(180deg,rgba(232,199,100,.15),rgba(232,199,100,.85) 30%,rgba(232,199,100,.85) 70%,rgba(232,199,100,.15));box-shadow:0 0 12px rgba(232,199,100,.35)}
 .hero-transport .caption-mark{background:var(--freight-gold);box-shadow:0 0 0 5px rgba(232,199,100,.17)}
 .hero-transport .visual-backplate{border-color:rgba(232,199,100,.66);background:rgba(232,199,100,.075)}
 .hero-transport .visual-stamp{top:20px;right:-18px;gap:9px;padding:12px 15px;background:var(--freight-gold);font-size:9px;letter-spacing:.13em;transform:translateZ(40px) rotate(2deg)}
 .hero-transport .visual-stamp i{width:15px;background:#385657}
 .hero-transport .float-card{border-color:rgba(232,199,100,.22);box-shadow:0 16px 35px rgba(0,0,0,.3)}
-.hero-transport .float-card-top{top:100px;left:-39px}
-.hero-transport .float-card-bottom{right:-28px;bottom:55px}
+.hero-transport .float-card-top{top:-30px;left:-39px}
+.hero-transport .float-card-bottom{right:-28px;bottom:-30px}
 .hero-transport .float-icon{background:#f4e8bf;color:#56471b}
 .hero-transport .transport-van-icon{background:#d8eeeb;color:#315c5b}
 .hero-transport .scroll-cue i{border-color:rgba(232,199,100,.5);color:var(--freight-gold)}
@@ -292,6 +292,9 @@ html{scroll-padding-top:94px}
 @media(max-width:620px){
   .hero-transport .hero-actions>.button{width:100%;justify-content:center}
   .hero-transport .hero-photo-frame{aspect-ratio:4/3}
+  .hero-transport .hero-photo-frame.hero-dual-frame{flex-direction:column}
+  .hero-transport .hero-dual-frame .hero-vehicle-pane{flex:none;width:100%}
+  .hero-transport .hero-pane-divider{width:auto;height:3px;background:linear-gradient(90deg,rgba(232,199,100,.15),rgba(232,199,100,.85) 30%,rgba(232,199,100,.85) 70%,rgba(232,199,100,.15))}
   .hero-spec{gap:9px;padding-right:10px}
   .hero-spec+.hero-spec{padding-left:10px}
   .hero-spec-icon{width:36px;height:36px}
