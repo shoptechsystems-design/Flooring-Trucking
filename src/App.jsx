@@ -71,6 +71,34 @@ function usePageInteractions() {
       card.addEventListener('pointerleave', resetTilt);
     });
 
+    // Depth scenes (hero visual, service-area map) expose the pointer position as --px/--py in [-0.5, 0.5]
+    const depthScenes = !prefersReducedMotion && supportsFineHover
+      ? Array.from(document.querySelectorAll('[data-depth-scene]'))
+      : [];
+    const trackDepth = (event) => {
+      const scene = event.currentTarget;
+      const bounds = scene.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      window.cancelAnimationFrame(scene.depthFrame);
+      scene.depthFrame = window.requestAnimationFrame(() => {
+        scene.style.setProperty('--px', x.toFixed(3));
+        scene.style.setProperty('--py', y.toFixed(3));
+        scene.classList.add('is-tracking');
+      });
+    };
+    const resetDepth = (event) => {
+      const scene = event.currentTarget;
+      window.cancelAnimationFrame(scene.depthFrame);
+      scene.style.removeProperty('--px');
+      scene.style.removeProperty('--py');
+      scene.classList.remove('is-tracking');
+    };
+    depthScenes.forEach((scene) => {
+      scene.addEventListener('pointermove', trackDepth);
+      scene.addEventListener('pointerleave', resetDepth);
+    });
+
     return () => {
       window.removeEventListener('scroll', queueProgress);
       window.removeEventListener('resize', queueProgress);
@@ -79,6 +107,11 @@ function usePageInteractions() {
         card.removeEventListener('pointermove', tilt);
         card.removeEventListener('pointerleave', resetTilt);
         card.style.transform = '';
+      });
+      depthScenes.forEach((scene) => {
+        scene.removeEventListener('pointermove', trackDepth);
+        scene.removeEventListener('pointerleave', resetDepth);
+        window.cancelAnimationFrame(scene.depthFrame);
       });
     };
   }, []);

@@ -58,7 +58,7 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-      <div className="hero-visual">
+      <div className="hero-visual" data-depth-scene>
         <div className="visual-backplate" aria-hidden="true" />
         <div className="hero-photo-frame hero-dual-frame">
           <div className="hero-vehicle-pane hero-pane-truck">
@@ -226,7 +226,24 @@ const areaFacts = [
   [<ShieldIcon />, 'Licensed carrier', 'USDOT 4327224 · MC-1689088'],
 ];
 
-const communities = ['Winston-Salem', 'Greensboro', 'High Point', 'Kernersville', 'Clemmons', 'Lexington', 'Surrounding communities'];
+const mapRoutes = [
+  'M178 114L303 168L386 216L468 119',
+  'M303 168L274 250L177 286',
+  'M303 168L372 295',
+  'M178 114L177 286',
+  'M386 216L372 295',
+];
+
+const mapPins = [
+  ['pin-ws', 'Winston-Salem', 'HOME BASE'],
+  ['pin-greensboro', 'Greensboro'],
+  ['pin-highpoint', 'High Point'],
+  ['pin-kernersville', 'Kernersville'],
+  ['pin-clemmons', 'Clemmons'],
+  ['pin-lexington', 'Lexington'],
+];
+
+const communities =['Winston-Salem', 'Greensboro', 'High Point', 'Kernersville', 'Clemmons', 'Lexington', 'Surrounding communities'];
 
 export function ServiceAreaSection() {
   return (
@@ -242,18 +259,18 @@ export function ServiceAreaSection() {
           </ul>
           <div className="area-chips">{communities.map((place) => <span key={place}>{place}</span>)}</div>
         </div>
-        <div className="area-map" role="img" aria-label="Schematic map of service communities in the Winston-Salem and Triad area; not to scale">
+        <div className="area-map area-map-3d" data-depth-scene role="img" aria-label="Schematic map of service communities in the Winston-Salem and Triad area; not to scale">
           <span className="map-kicker">THE PIEDMONT TRIAD <i>·</i> NORTH CAROLINA</span>
-          <svg viewBox="0 0 620 410" className="map-lines" aria-hidden="true">
-            <path d="M178 114L303 168L386 216L468 119M303 168L274 250L177 286M303 168L372 295M178 114L177 286M386 216L372 295" />
-            <circle cx="178" cy="114" r="4" /><circle cx="303" cy="168" r="4" /><circle cx="386" cy="216" r="4" /><circle cx="468" cy="119" r="4" /><circle cx="274" cy="250" r="4" /><circle cx="177" cy="286" r="4" /><circle cx="372" cy="295" r="4" />
-          </svg>
-          <span className="map-pin pin-ws"><i /><b>Winston-Salem</b><small>HOME BASE</small></span>
-          <span className="map-pin pin-greensboro"><i /><b>Greensboro</b></span>
-          <span className="map-pin pin-highpoint"><i /><b>High Point</b></span>
-          <span className="map-pin pin-kernersville"><i /><b>Kernersville</b></span>
-          <span className="map-pin pin-clemmons"><i /><b>Clemmons</b></span>
-          <span className="map-pin pin-lexington"><i /><b>Lexington</b></span>
+          <div className="map-plane" aria-hidden="true">
+            <svg viewBox="0 0 620 410" className="map-lines">
+              <path d="M178 114L303 168L386 216L468 119M303 168L274 250L177 286M303 168L372 295M178 114L177 286M386 216L372 295" />
+              {mapRoutes.map((route, index) => <path key={route} className="map-route" d={route} pathLength="1" style={{ '--d': index }} />)}
+              <circle cx="178" cy="114" r="4" /><circle cx="303" cy="168" r="4" /><circle cx="386" cy="216" r="4" /><circle cx="468" cy="119" r="4" /><circle cx="274" cy="250" r="4" /><circle cx="177" cy="286" r="4" /><circle cx="372" cy="295" r="4" />
+            </svg>
+            {mapPins.map(([className, name, note], index) => (
+              <span key={name} className={`map-pin ${className}`} style={{ '--d': index }}><i /><b>{name}</b>{note && <small>{note}</small>}</span>
+            ))}
+          </div>
           <span className="map-legend"><i /> Triad service communities</span>
           <small className="map-disclaimer">Schematic map · not to scale</small>
         </div>
