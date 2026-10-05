@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { PhoneIcon } from './Transportation.jsx';
 
 const navigationItems = [
   ['Home', '#home'],
@@ -104,7 +105,7 @@ export function SiteFooter() {
 export function MobileActions() {
   return (
     <div className="mobile-actions" aria-label="Quick actions">
-      <a href="tel:+13369556193"><span aria-hidden="true">✆</span> Call 336-955-6193</a>
+      <a href="tel:+13369556193"><PhoneIcon /> Call 336-955-6193</a>
       <a href="#freight-form"><span aria-hidden="true">↗</span> Get a freight quote</a>
     </div>
   );

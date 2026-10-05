@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SiteFooter, SiteHeader, MobileActions } from './components/SiteChrome.jsx';
 import {
-  AboutSection,
   EquipmentSection,
   FreightServicesSection,
   HeroSection,
@@ -39,7 +38,7 @@ function usePageInteractions() {
     let revealObserver;
     if (!prefersReducedMotion && 'IntersectionObserver' in window) {
       const revealTargets = document.querySelectorAll(
-        '.section-heading, .service-card, .flooring-feature, .quote-intro, .lead-form, .freight-showcase, .vehicle-card, .why-card, .process-track, .project-gallery-layout, .review-group, .area-copy, .area-map, .final-cta-inner'
+        '.section-heading, .service-card, .flooring-feature, .quote-intro, .lead-form, .freight-showcase, .vehicle-card, .why-card, .process-track, .process-timeline, .project-gallery-layout, .review-group, .area-copy, .area-map, .final-cta-inner'
       );
       revealObserver = new IntersectionObserver((entries, observer) => {
         for (const entry of entries) {
@@ -133,7 +132,6 @@ export default function App() {
         <EquipmentSection />
         <FreightServicesSection />
         <ProcessSection />
-        <AboutSection />
         <ServiceAreaSection />
         <FreightQuoteSection />
         <FlooringServicesSection />

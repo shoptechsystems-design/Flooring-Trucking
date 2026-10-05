@@ -15,6 +15,18 @@ function VehicleSvg({ van = false }) {
   );
 }
 
+export function PinIcon() {
+  return <svg className="line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.5" /></svg>;
+}
+
+export function PhoneIcon() {
+  return <svg className="line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" /></svg>;
+}
+
+function ShieldIcon() {
+  return <svg className="line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" /><path d="m9 12 2 2 4-4" /></svg>;
+}
+
 export function HeroSection() {
   return (
     <section className="hero section-shell hero-transport" id="home" aria-labelledby="hero-title">
@@ -24,8 +36,9 @@ export function HeroSection() {
         <p className="hero-lede">Box truck and Sprinter van transportation for local, regional, expedited and dedicated freight. Based in Winston-Salem, North Carolina.</p>
         <div className="hero-actions">
           <FreightButton />
-          <a className="button button-outline button-call" href="tel:+13369556193"><span aria-hidden="true">✆</span> Call 336-955-6193</a>
+          <a className="button button-outline button-call" href="tel:+13369556193"><PhoneIcon /> Call 336-955-6193</a>
         </div>
+        <p className="hero-credentials"><ShieldIcon /><b>Licensed carrier</b><span>USDOT 4327224 · MC-1689088</span></p>
         <div className="hero-specs" aria-label="Equipment specifications">
           <div className="hero-spec">
             <span className="hero-spec-icon" aria-hidden="true"><VehicleSvg /></span>
@@ -74,8 +87,8 @@ export function HeroSection() {
           </div>
         </div>
         <div className="visual-stamp" aria-label="Local and regional transportation"><span>LOCAL</span><i aria-hidden="true" /><span>REGIONAL</span></div>
-        <div className="float-card float-card-top"><span className="float-icon" aria-hidden="true">▰</span><span><b>26 FT BOX TRUCK</b><small>96″ W × 96″ H door</small></span></div>
-        <div className="float-card float-card-bottom"><span className="float-icon transport-van-icon" aria-hidden="true">▱</span><span><b>SPRINTER VAN</b><small>126″ L cargo area</small></span></div>
+        <div className="float-card float-card-top"><span className="float-icon" aria-hidden="true"><VehicleSvg /></span><span><b>26 FT BOX TRUCK</b><small>96″ W × 96″ H door</small></span></div>
+        <div className="float-card float-card-bottom"><span className="float-icon transport-van-icon" aria-hidden="true"><VehicleSvg van /></span><span><b>SPRINTER VAN</b><small>126″ L cargo area</small></span></div>
       </div>
       <a className="scroll-cue" href="#equipment"><span>Explore equipment</span><i aria-hidden="true">↓</i></a>
     </section>
@@ -186,54 +199,47 @@ export function ProcessSection() {
   return (
     <section className="process-section section-pad trucking-process" aria-labelledby="process-title">
       <div className="section-shell">
-        <div className="section-heading section-heading-row">
-          <div><Eyebrow>Straightforward from here</Eyebrow><h2 id="process-title">Clear next steps.<br /><em>Before the move.</em></h2></div>
-          <p className="heading-aside">Keep the conversation focused on the route, the shipment and the equipment being requested.</p>
+        <div className="section-heading section-heading-center">
+          <Eyebrow>Straightforward from here</Eyebrow>
+          <h2 id="process-title">Clear next steps.<br /><em>Before the move.</em></h2>
+          <p className="heading-aside">Three steps from your first message to a confirmed pickup.</p>
         </div>
-        <div className="process-grid process-grid-transport">
+        <ol className="process-timeline">
           {processSteps.map(([number, title, step, body]) => (
-            <div className="process-track process-track-freight" key={number}>
-              <h3><span className="process-icon" aria-hidden="true">{number}</span>{title}</h3>
-              <ol><li><span className="process-number">{number}</span><div><b>{step}</b><p>{body}</p></div></li></ol>
-            </div>
+            <li key={number}>
+              <span className="timeline-dot" aria-hidden="true">{number}</span>
+              <h3>{title}</h3>
+              <b>{step}</b>
+              <p>{body}</p>
+            </li>
           ))}
-        </div>
+        </ol>
+        <div className="process-action"><FreightButton>Start with step 01</FreightButton></div>
       </div>
     </section>
   );
 }
 
-export function AboutSection() {
-  const proof = [
-    ['⌖', '01 / HOME BASE', 'Winston-Salem, NC', 'Transportation from a local Triad base, with regional freight service available by route.'],
-    ['▰', '02 / EQUIPMENT', 'Two equipment options', 'A 26-foot box truck and a Sprinter van option for different shipment needs.'],
-    ['↗', '03 / NEXT STEP', 'Talk through the load', 'Use the freight quote form or call 336-955-6193 to share shipment details.'],
-  ];
-  return (
-    <section className="why-section section-pad transport-about" id="about" aria-labelledby="why-title">
-      <div className="section-shell">
-        <div className="section-heading section-heading-row">
-          <div><Eyebrow>About Lil Man Big Van</Eyebrow><h2 id="why-title">Winston-Salem roots.<br /><em>Freight first.</em></h2></div>
-          <p className="heading-aside">Flooring For All DBA Lil Man Big Van is based in Winston-Salem, North Carolina. This section leads with transportation; Flooring Services is presented separately below.</p>
-        </div>
-        <div className="why-grid transport-proof-grid">
-          {proof.map(([icon, index, title, body]) => <article className="why-card" key={index}><span className="why-icon" aria-hidden="true">{icon}</span><span className="why-index">{index}</span><h3>{title}</h3><p>{body}</p></article>)}
-        </div>
-      </div>
-    </section>
-  );
-}
+const areaFacts = [
+  [<PinIcon />, 'Home base', 'Winston-Salem, NC'],
+  [<VehicleSvg />, 'Equipment', '26-ft box truck & Sprinter van'],
+  [<ShieldIcon />, 'Licensed carrier', 'USDOT 4327224 · MC-1689088'],
+];
 
 const communities = ['Winston-Salem', 'Greensboro', 'High Point', 'Kernersville', 'Clemmons', 'Lexington', 'Surrounding communities'];
 
 export function ServiceAreaSection() {
   return (
     <section className="service-area-section section-pad" id="service-area" aria-labelledby="area-title">
+      <span className="anchor-target" id="about" aria-hidden="true" />
       <div className="section-shell area-layout">
         <div className="area-copy">
-          <Eyebrow>Freight from the Piedmont Triad</Eyebrow>
+          <Eyebrow>About Lil Man Big Van</Eyebrow>
           <h2 id="area-title">Based in Winston-Salem.<br /><em>Moving around the Triad.</em></h2>
-          <p>Local and regional transportation from Winston-Salem, serving the Triad and surrounding communities. Share routes outside the area for a freight-service review.</p>
+          <p>Flooring For All DBA Lil Man Big Van is a Winston-Salem, NC carrier running local and regional freight across the Triad and surrounding communities. Have a route outside the area? Send it over and we’ll review it.</p>
+          <ul className="area-facts">
+            {areaFacts.map(([icon, label, value]) => <li key={label}><span className="area-fact-icon" aria-hidden="true">{icon}</span><span><small>{label}</small><b>{value}</b></span></li>)}
+          </ul>
           <div className="area-chips">{communities.map((place) => <span key={place}>{place}</span>)}</div>
         </div>
         <div className="area-map" role="img" aria-label="Schematic map of service communities in the Winston-Salem and Triad area; not to scale">

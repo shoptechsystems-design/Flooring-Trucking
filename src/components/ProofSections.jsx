@@ -1,3 +1,6 @@
+import { PhoneIcon, PinIcon } from './Transportation.jsx';
+
+
 export function ProjectGallerySection() {
   return (
     <section
@@ -307,7 +310,7 @@ export function CustomerReviewsSection() {
 
                     {/* LOCATION */}
                     <p className="review-location">
-                      <span aria-hidden="true">⌖</span>{" "}
+                      <PinIcon />
                       {review.location}
                     </p>
 
@@ -337,7 +340,7 @@ export function CustomerReviewsSection() {
           className="button button-copper review-call"
           href="tel:+13369556193"
         >
-          <span aria-hidden="true">✆</span>
+          <PhoneIcon />
           Call 336-955-6193
         </a>
 
