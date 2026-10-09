@@ -448,3 +448,10 @@ html{scroll-padding-top:94px}
   .hero-transport .visual-stamp{right:10px}
   .hero-transport .hero-visual{margin-bottom:34px}
 }
+/* Banner items: slogan, trust line, footer slogan */
+.hero-slogan{margin:18px 0 0;color:#e1e5ec;font:600 15px var(--display);letter-spacing:-.01em}
+.hero-slogan b{color:var(--freight-gold)}
+.hero-trust{display:flex;flex-wrap:wrap;gap:6px 0;margin:8px 0 0;padding:0;list-style:none;color:#c4c9d2;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.hero-trust li+li:before{content:"•";margin:0 10px;color:#e0473f}
+.footer-brand .footer-slogan{color:#fff;font:600 14px/1.45 var(--display)}
+@media(max-width:620px){.hero-slogan{font-size:14px}.hero-trust{font-size:9px}.hero-trust li+li:before{margin:0 7px}}

@@ -73,7 +73,8 @@ export function SiteFooter() {
             <img className="brand-mark" src="/images/logo/lil-man-big-van-logo-192.png" width="92" height="92" alt="" loading="lazy" decoding="async" />
             <span className="brand-copy"><small>Flooring For All DBA</small><strong>Lil Man Big Van</strong></span>
           </a>
-          <p>Reliable. Local. Professional.<br />Transportation first. Flooring services presented separately.</p>
+          <p className="footer-slogan">Small enough to care,<br />big enough to deliver.</p>
+          <p>Fully insured · DOT compliant · Available 24/7</p>
         </div>
         <div className="footer-column">
           <b>Explore</b>
@@ -88,6 +89,7 @@ export function SiteFooter() {
         <div className="footer-location">
           <b>Flooring For All LLC</b>
           <address>DBA Lil Man Big Van<br />Winston-Salem, NC</address>
+          <span>Steven Hairston, Owner/Operator</span>
           <span>USDOT 4327224 · MC-1689088</span>
           <span>Transportation serving the Triad and regional freight lanes.</span>
           <a className="footer-up" href="#home">Back to top ↑</a>

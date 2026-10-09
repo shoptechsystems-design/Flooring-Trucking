@@ -17,6 +17,10 @@ function VehicleSvg({ van = false }) {
   );
 }
 
+function PersonIcon() {
+  return <svg className="line-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>;
+}
+
 export function PinIcon() {
   return <svg className="line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.5" /></svg>;
 }
@@ -41,6 +45,8 @@ export function HeroSection() {
           <a className="button button-outline button-call" href="tel:+13369556193"><PhoneIcon /> Call 336-955-6193</a>
         </div>
         <p className="hero-credentials"><ShieldIcon /><b>Licensed carrier</b><span>USDOT 4327224 · MC-1689088</span></p>
+        <p className="hero-slogan">Small enough to care, <b>big enough to deliver.</b></p>
+        <ul className="hero-trust" aria-label="Carrier commitments"><li>Fully insured</li><li>DOT compliant</li><li>Available 24/7</li></ul>
         <div className="hero-specs" aria-label="Equipment specifications">
           <div className="hero-spec">
             <span className="hero-spec-icon" aria-hidden="true"><VehicleSvg /></span>
@@ -333,6 +339,7 @@ export function ProcessSection() {
 }
 
 const areaFacts = [
+  [<PersonIcon />, 'Owner/Operator', 'Steven Hairston'],
   [<PinIcon />, 'Home base', 'Winston-Salem, NC'],
   [<VehicleSvg />, 'Equipment', '26-ft box truck & Sprinter van'],
   [<ShieldIcon />, 'Licensed carrier', 'USDOT 4327224 · MC-1689088'],
