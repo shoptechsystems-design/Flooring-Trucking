@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 const recipients = {
   freight: 'Lilman.bigvan@gmail.com',
@@ -6,6 +6,143 @@ const recipients = {
   // Note: if you ever need freight to route separately to logistics:
   // freight: 'Nathanw.logistics@gmail.com',
 };
+
+
+const iconPaths = {
+  building: 'M4 21V5l8-3 8 3v16M9 21v-4h6v4M8 9h.01M12 9h.01M16 9h.01M8 13h.01M12 13h.01M16 13h.01',
+  user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',
+  phone: 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z',
+  mail: 'M3 6h18v12H3zM3 7l9 6 9-6',
+  pickup: 'M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21zM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+  flag: 'M5 21V4M5 4h11l-2 4 2 4H5',
+  truck: 'M2 6h12v10H2zM14 10h4l3 3v3h-7M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
+  calendar: 'M4 6h16v15H4zM4 10h16M8 3v4M16 3v4',
+  box: 'M3 7l9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4M12 11v10',
+  stack: 'M4 15h16v5H4zM6 10h12v5H6zM8 5h8v5H8z',
+  scale: 'M6 8h12l2 13H4zM9 8a3 3 0 0 1 6 0',
+  ruler: 'M3 17 17 3l4 4L7 21zM7 13l2 2M10 10l2 2M13 7l2 2',
+  home: 'M3 11 12 4l9 7M5 10v11h14V10M10 21v-6h4v6',
+  layers: 'M12 3 3 8l9 5 9-5zM3 13l9 5 9-5',
+  trash: 'M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14',
+  area: 'M4 4h16v16H4zM4 9h16M9 4v16',
+  chat: 'M4 5h16v11H9l-5 4z',
+  upload: 'M12 16V4M7 9l5-5 5 5M4 16v4h16v-4',
+};
+
+function FieldIcon({ name }) {
+  return <svg className="field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d={iconPaths[name]} /></svg>;
+}
+
+function Field({ label, required = false, icon, wide = false, hint, children }) {
+  return (
+    <label className={`field${wide ? ' field-wide' : ''}`}>
+      <span className="field-label">{label}{required && <span className="field-required" aria-hidden="true">*</span>}</span>
+      <span className={`field-control${icon ? ' has-icon' : ''}`}>{icon && <FieldIcon name={icon} />}{children}</span>
+      {hint && <small>{hint}</small>}
+    </label>
+  );
+}
+
+function FormGroup({ number, title, children }) {
+  return (
+    <fieldset className="form-group">
+      <legend><span className="form-group-number">{number}</span>{title}</legend>
+      <div className="form-grid">{children}</div>
+    </fieldset>
+  );
+}
+
+// Branded replacement for <select>: same name/value in FormData via a hidden input.
+function SelectField({ label, name, icon, options, defaultValue = '', placeholder = 'Choose one', wide = false }) {
+  const [value, setValue] = useState(defaultValue);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
+  const rootRef = useRef(null);
+  const listRef = useRef(null);
+  const id = useId();
+  const selected = options.find((option) => option.value === value);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const close = (event) => { if (!rootRef.current?.contains(event.target)) setOpen(false); };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [open]);
+
+  useEffect(() => {
+    if (open) listRef.current?.querySelector('[data-active="true"]')?.scrollIntoView({ block: 'nearest' });
+  }, [open, active]);
+
+  const openList = () => {
+    setActive(Math.max(0, options.findIndex((option) => option.value === value)));
+    setOpen(true);
+  };
+  const choose = (index) => { setValue(options[index].value); setOpen(false); };
+
+  const onKeyDown = (event) => {
+    if (event.key === 'Escape') { setOpen(false); return; }
+    if (event.key === 'Tab') { setOpen(false); return; }
+    if (['ArrowDown', 'ArrowUp', 'Enter', ' ', 'Home', 'End'].includes(event.key)) event.preventDefault();
+    if (!open) { if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) openList(); return; }
+    if (event.key === 'ArrowDown') setActive((index) => Math.min(options.length - 1, index + 1));
+    if (event.key === 'ArrowUp') setActive((index) => Math.max(0, index - 1));
+    if (event.key === 'Home') setActive(0);
+    if (event.key === 'End') setActive(options.length - 1);
+    if (event.key === 'Enter' || event.key === ' ') choose(active);
+  };
+
+  return (
+    <div className={`field field-select${wide ? ' field-wide' : ''}${open ? ' is-open' : ''}`} ref={rootRef}>
+      <span className="field-label" id={`${id}-label`}>{label}</span>
+      <input type="hidden" name={name} value={value} />
+      <button
+        type="button"
+        className={`select-trigger${icon ? ' has-icon' : ''}${selected ? '' : ' is-placeholder'}`}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-labelledby={`${id}-label ${id}-value`}
+        aria-controls={`${id}-list`}
+        aria-activedescendant={open ? `${id}-opt-${active}` : undefined}
+        onClick={() => (open ? setOpen(false) : openList())}
+        onKeyDown={onKeyDown}
+      >
+        {icon && <FieldIcon name={icon} />}
+        <span id={`${id}-value`} className="select-value">{selected ? selected.label : placeholder}</span>
+        <svg className="select-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      {open && (
+        <ul className="select-list" role="listbox" id={`${id}-list`} aria-labelledby={`${id}-label`} ref={listRef}>
+          {options.map((option, index) => (
+            <li
+              key={option.value || option.label}
+              id={`${id}-opt-${index}`}
+              role="option"
+              aria-selected={option.value === value}
+              data-active={index === active}
+              onPointerEnter={() => setActive(index)}
+              onPointerDown={(event) => event.preventDefault()}
+              onClick={() => choose(index)}
+            >
+              <span className="select-option-text"><b>{option.label}</b>{option.note && <small>{option.note}</small>}</span>
+              <svg className="select-check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+const opt = (label, note) => ({ value: label, label, note });
+const equipmentOptions = [
+  opt('Not sure yet', 'We’ll help you pick'),
+  opt('26-ft box truck', '96″ × 96″ door · palletized loads'),
+  opt('Sprinter van', '126″ cargo · smaller & expedited'),
+  opt('Need a recommendation', 'Tell us the load, we’ll advise'),
+];
+const flooringTypeOptions = [opt('LVP / luxury vinyl plank'), opt('Carpet'), opt('Glue-down flooring'), opt('Other / not sure yet')];
+const removalOptions = [opt('Existing LVP'), opt('Carpet'), opt('Glue-down flooring'), opt('More than one flooring type'), opt('No removal needed'), opt('Not sure yet')];
+const contactOptions = [opt('Phone', 'We’ll call you'), opt('Email', 'We’ll reply by email'), opt('Text', 'We’ll text you')];
 
 function ConfirmationSummary({ summary, onReset }) {
   const isFreight = summary.isFreight;
@@ -203,34 +340,53 @@ function LeadForm({ kind, formRef, flooringFields, onFlooringFieldChange }) {
         <span className="form-required">* Required</span>
       </div>
       {isFreight ? (
-        <div className="form-grid">
-          <label>Company name<input name="Company Name" autoComplete="organization" placeholder="Your company" /></label>
-          <label>Contact name <span>*</span><input name="Contact Name" autoComplete="name" required placeholder="Your name" /></label>
-          <label>Phone <span>*</span><input name="Phone" type="tel" autoComplete="tel" required placeholder="Your phone number" /></label>
-          <label>Email <span>*</span><input name="Email" type="email" autoComplete="email" required placeholder="you@example.com" /></label>
-          <label>Pickup location <span>*</span><input name="Pickup Location" required placeholder="City, state or ZIP" /></label>
-          <label>Delivery location <span>*</span><input name="Delivery Location" required placeholder="City, state or ZIP" /></label>
-          <label>Equipment needed<select name="Equipment Needed"><option>Not sure yet</option><option>26-ft box truck</option><option>Sprinter van</option><option>Need a recommendation</option></select></label>
-          <label>Pickup date<input name="Pickup Date" type="date" /></label>
-          <label>Commodity<input name="Commodity" placeholder="What are you shipping?" /></label>
-          <label>Number of pallets / pieces<input name="Number of Pallets / Pieces" type="number" inputMode="numeric" min="1" placeholder="e.g. 4 pallets" /></label>
-          <label>Weight<input name="Weight" placeholder="e.g. 1,200 lb" /></label>
-          <label>Dimensions<input name="Dimensions" placeholder="L × W × H" /></label>
-          <label className="field-wide">Additional details<textarea name="Additional Details" rows="3" placeholder="Anything else we should know about pickup or delivery?" /></label>
-        </div>
+        <>
+          <FormGroup number="01" title="Your contact details">
+            <Field label="Company name" icon="building"><input name="Company Name" autoComplete="organization" placeholder="Your company" /></Field>
+            <Field label="Contact name" required icon="user"><input name="Contact Name" autoComplete="name" required placeholder="Your name" /></Field>
+            <Field label="Phone" required icon="phone"><input name="Phone" type="tel" autoComplete="tel" required placeholder="Your phone number" /></Field>
+            <Field label="Email" required icon="mail"><input name="Email" type="email" autoComplete="email" required placeholder="you@example.com" /></Field>
+          </FormGroup>
+          <FormGroup number="02" title="Route & timing">
+            <Field label="Pickup location" required icon="pickup"><input name="Pickup Location" required placeholder="City, state or ZIP" /></Field>
+            <Field label="Delivery location" required icon="flag"><input name="Delivery Location" required placeholder="City, state or ZIP" /></Field>
+            <SelectField label="Equipment needed" name="Equipment Needed" icon="truck" options={equipmentOptions} defaultValue="Not sure yet" />
+            <Field label="Pickup date" icon="calendar"><input name="Pickup Date" type="date" /></Field>
+          </FormGroup>
+          <FormGroup number="03" title="Shipment details">
+            <Field label="Commodity" icon="box"><input name="Commodity" placeholder="What are you shipping?" /></Field>
+            <Field label="Pallets / pieces" icon="stack"><input name="Number of Pallets / Pieces" type="number" inputMode="numeric" min="1" placeholder="e.g. 4" /></Field>
+            <Field label="Weight" icon="scale"><input name="Weight" placeholder="e.g. 1,200 lb" /></Field>
+            <Field label="Dimensions" icon="ruler"><input name="Dimensions" placeholder="L × W × H" /></Field>
+            <Field label="Additional details" wide><textarea name="Additional Details" rows="3" placeholder="Anything else we should know about pickup or delivery?" /></Field>
+          </FormGroup>
+        </>
       ) : (
-        <div className="form-grid">
-          <label>Name <span>*</span><input name="Name" autoComplete="name" required placeholder="Your name" /></label>
-          <label>Phone <span>*</span><input name="Phone" type="tel" autoComplete="tel" required placeholder="(336) 555-0123" /></label>
-          <label>Email <span>*</span><input name="Email" type="email" autoComplete="email" required placeholder="you@example.com" /></label>
-          <label>Project address<input name="Project Address" autoComplete="street-address" placeholder="Street, city, ZIP" /></label>
-          <label>Type of flooring<select name="Type of Flooring"><option value="">Choose one</option><option>LVP / luxury vinyl plank</option><option>Carpet</option><option>Glue-down flooring</option><option>Other / not sure yet</option></select></label>
-          <label>What needs to be removed?<select name="What needs to be removed"><option value="">Choose one</option><option>Existing LVP</option><option>Carpet</option><option>Glue-down flooring</option><option>More than one flooring type</option><option>No removal needed</option><option>Not sure yet</option></select></label>
-          <label>Approximate square footage<input name="Approximate Square Footage" type="number" inputMode="numeric" min="1" placeholder="e.g. 850" value={flooringFields?.area || ''} onChange={handleFieldChange} /></label>
-          <label>Preferred contact method<select name="Preferred Contact Method"><option>Phone</option><option>Email</option><option>Text</option></select></label>
-          <label className="field-wide">Upload photos<input name="Project Photos" type="file" accept="image/*" multiple onChange={handleFieldChange} /><small>{photoNote}</small></label>
-          <label className="field-wide">Additional project details<textarea name="Message" rows="3" placeholder="A little more about the space or project" value={flooringFields?.message || ''} onChange={handleFieldChange} /></label>
-        </div>
+        <>
+          <FormGroup number="01" title="Your contact details">
+            <Field label="Name" required icon="user"><input name="Name" autoComplete="name" required placeholder="Your name" /></Field>
+            <Field label="Phone" required icon="phone"><input name="Phone" type="tel" autoComplete="tel" required placeholder="(336) 555-0123" /></Field>
+            <Field label="Email" required icon="mail"><input name="Email" type="email" autoComplete="email" required placeholder="you@example.com" /></Field>
+            <SelectField label="Preferred contact method" name="Preferred Contact Method" icon="chat" options={contactOptions} defaultValue="Phone" />
+          </FormGroup>
+          <FormGroup number="02" title="About the project">
+            <Field label="Project address" icon="home" wide><input name="Project Address" autoComplete="street-address" placeholder="Street, city, ZIP" /></Field>
+            <SelectField label="Type of flooring" name="Type of Flooring" icon="layers" options={flooringTypeOptions} />
+            <SelectField label="What needs to be removed?" name="What needs to be removed" icon="trash" options={removalOptions} />
+            <Field label="Approximate square footage" icon="area" wide><input name="Approximate Square Footage" type="number" inputMode="numeric" min="1" placeholder="e.g. 850" value={flooringFields?.area || ''} onChange={handleFieldChange} /></Field>
+          </FormGroup>
+          <FormGroup number="03" title="Photos & details">
+            <label className="field field-wide field-file">
+              <span className="field-label">Upload photos</span>
+              <span className="file-drop">
+                <input name="Project Photos" type="file" accept="image/*" multiple onChange={handleFieldChange} />
+                <FieldIcon name="upload" />
+                <span className="file-drop-text"><b>Click to upload</b> or drag photos here<small>{photoNote}</small></span>
+              </span>
+            </label>
+            <Field label="Additional project details" wide><textarea name="Message" rows="3" placeholder="A little more about the space or project" value={flooringFields?.message || ''} onChange={handleFieldChange} /></Field>
+          </FormGroup>
+        </>
       )}
       <p className="form-delivery-note">{isFreight
         ? 'Submitting sends your request directly to our logistics team and displays your confirmation summary instantly.'
