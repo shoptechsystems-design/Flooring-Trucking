@@ -9,6 +9,7 @@ import {
 } from './components/Transportation.jsx';
 import { FreightQuoteSection, FlooringQuoteSection } from './components/QuoteForms.jsx';
 import { FlooringServicesSection, FlooringVisualizer } from './components/Flooring.jsx';
+import WelcomeModal from './components/WelcomeModal.jsx';
 import { CustomerReviewsSection, FinalCallToAction, ProjectGallerySection } from './components/ProofSections.jsx';
 
 const formatArea = (value) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(Math.round(value * 10) / 10);
@@ -179,6 +180,7 @@ export default function App() {
       </main>
       <SiteFooter />
       <MobileActions />
+      <WelcomeModal />
     </>
   );
 }
