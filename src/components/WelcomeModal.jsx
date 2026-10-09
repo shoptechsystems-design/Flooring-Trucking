@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-const SEEN_KEY = 'lmbv-welcome-seen';
-
 // Hotspots sit over the two buttons printed in the banner image (percent of image size).
 const choices = [
   { id: 'freight-form', label: 'Freight quote', hint: 'Trucking & logistics', className: 'welcome-hotspot-freight' },
@@ -21,18 +19,14 @@ export default function WelcomeModal() {
   const dialogRef = useRef(null);
   const lastFocus = useRef(null);
 
-  // Show once per browser session, shortly after the page lands. Never rendered on the server.
+  // Show on every page load, shortly after landing. Never rendered on the server.
   useEffect(() => {
-    let seen = false;
-    try { seen = window.sessionStorage.getItem(SEEN_KEY) === '1'; } catch { /* storage blocked */ }
-    if (seen) return undefined;
     const timer = window.setTimeout(() => setOpen(true), 700);
     return () => window.clearTimeout(timer);
   }, []);
 
   const close = useCallback((targetId) => {
     setOpen(false);
-    try { window.sessionStorage.setItem(SEEN_KEY, '1'); } catch { /* storage blocked */ }
     if (targetId) window.setTimeout(() => goToForm(targetId), 60);
     else lastFocus.current?.focus?.({ preventScroll: true });
   }, []);
