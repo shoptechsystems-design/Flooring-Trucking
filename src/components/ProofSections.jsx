@@ -432,8 +432,7 @@ export function FinalCallToAction() {
 
         {/* ADDRESS / DOT / MC */}
         <p className="contact-address">
-          4175 Smith Farm Lane, Winston-Salem, NC 27107 · USDOT 4327224 ·
-          MC-1689088
+          Winston-Salem, NC · USDOT 4327224 · MC-1689088
         </p>
 
       </div>

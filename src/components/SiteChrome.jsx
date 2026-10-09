@@ -87,7 +87,7 @@ export function SiteFooter() {
         </div>
         <div className="footer-location">
           <b>Flooring For All LLC</b>
-          <address>DBA Lil Man Big Van<br />4175 Smith Farm Lane<br />Winston-Salem, NC 27107</address>
+          <address>DBA Lil Man Big Van<br />Winston-Salem, NC</address>
           <span>USDOT 4327224 · MC-1689088</span>
           <span>Transportation serving the Triad and regional freight lanes.</span>
           <a className="footer-up" href="#home">Back to top ↑</a>
