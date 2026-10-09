@@ -455,3 +455,10 @@ html{scroll-padding-top:94px}
 .hero-trust li+li:before{content:"•";margin:0 10px;color:#e0473f}
 .footer-brand .footer-slogan{color:#fff;font:600 14px/1.45 var(--display)}
 @media(max-width:620px){.hero-slogan{font-size:14px}.hero-trust{font-size:9px}.hero-trust li+li:before{margin:0 7px}}
+/* Pure white light sections (client request): no grey/blue-grey page backgrounds */
+:root{--paper:#ffffff;--paper-2:#ffffff;--white:#ffffff}
+body{background:#fff}
+.transport-services,.trucking-process,.process-section,.transport-about,.flooring-section,.service-area-section,.flooring-visualizer-section,.project-gallery-section{background:#fff;border-top:1px solid #e6e8ee}
+.timeline-dot{box-shadow:0 0 0 8px #fff,0 14px 28px rgba(11,41,43,.22)}
+.visualizer-card,.gallery-copy,.review-card-flooring{background:#fff}
+.confirmation-details-box{background:#fff}
