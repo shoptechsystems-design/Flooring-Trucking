@@ -383,3 +383,68 @@ html{scroll-padding-top:94px}
 }
 .map-plane .map-lines{transform:translateZ(-2px)}
 .map-plane .map-pin b,.map-plane .map-pin small{text-shadow:0 0 6px #0a1b4a,0 0 3px #0a1b4a,0 2px 5px rgba(0,0,0,.32)}
+/* Equipment flip cards: photo on the front, specs on the back */
+.vehicle-flip{padding:0;perspective:1600px}
+.vehicle-flip .flip-inner{display:grid;height:100%;min-height:390px;transform-style:preserve-3d;transition:transform .85s var(--ease)}
+.vehicle-flip.is-flipped .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:relative;grid-area:1/1;border-radius:24px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip-front{overflow:hidden}
+.flip-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 58%;transition:transform .7s var(--ease)}
+.vehicle-flip:hover .flip-photo{transform:scale(1.045)}
+.flip-front:after{position:absolute;inset:0;content:"";background:linear-gradient(180deg,rgba(6,17,47,0) 22%,rgba(6,17,47,.72) 52%,rgba(6,17,47,.96))}
+.flip-front-copy .vehicle-label,.flip-front-copy h3,.flip-teaser{text-shadow:0 1px 10px rgba(0,0,0,.55)}
+.flip-front-copy .vehicle-label{color:var(--freight-gold)}
+.flip-front-copy{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;padding:26px 28px 26px}
+.flip-front-copy h3{margin:7px 0 4px}
+.vehicle-card .flip-teaser{min-height:0;margin:0 0 15px;color:#e1e5ec;font-size:12px}
+.flip-back{display:flex;flex-direction:column;padding:29px 30px 27px;transform:rotateY(180deg)}
+.flip-back-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:auto}
+.flip-toggle{display:inline-flex;align-items:center;align-self:flex-start;gap:8px;padding:9px 15px;border:1px solid rgba(255,255,255,.36);border-radius:999px;background:rgba(6,17,47,.55);color:#fff;font:700 11px var(--sans);cursor:pointer;backdrop-filter:blur(6px);transition:border-color .25s,color .25s,transform .25s}
+.flip-toggle:hover,.flip-toggle:focus-visible{border-color:var(--freight-gold);color:var(--freight-gold);transform:translateY(-1px)}
+.flip-back .flip-toggle{background:transparent}
+/* Van walk-around: 3D photo ring */
+.van-walkaround{margin-top:56px;padding-top:44px;border-top:1px solid var(--freight-line)}
+.walkaround-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.walkaround-head h3{margin:0;color:#fff;font-size:clamp(28px,3.4vw,44px);letter-spacing:-.06em;line-height:1.05}
+.walkaround-head h3 em{color:var(--freight-gold);font-family:var(--serif);font-weight:400;letter-spacing:-.04em}
+.walkaround-head>p{max-width:300px;margin:0;color:#c4c9d2;font-size:12px;line-height:1.7}
+.walkaround-stage{--w:min(540px,64vw);--r:calc(var(--w) * .69);position:relative;height:calc(var(--w) * .75 + 70px);overflow:hidden;perspective:1800px;touch-action:pan-y;user-select:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.walkaround-stage:after{position:absolute;bottom:14px;left:50%;width:calc(var(--w) * 1.1);height:42px;margin-left:calc(var(--w) * -.55);content:"";background:radial-gradient(ellipse,rgba(0,0,0,.5),transparent 70%)}
+.walkaround-ring{position:absolute;top:32px;left:50%;width:var(--w);aspect-ratio:4/3;margin-left:calc(var(--w) / -2);transform-style:preserve-3d;transform:translateZ(calc(var(--r) * -1)) rotateY(var(--angle));transition:transform .9s var(--ease)}
+.walkaround-face{position:absolute;inset:0;margin:0;overflow:hidden;border:1px solid rgba(255,255,255,.18);border-radius:22px;background:#09163a;box-shadow:0 30px 60px rgba(0,0,0,.4);transform:rotateY(calc(var(--i) * 72deg)) translateZ(var(--r));backface-visibility:hidden;-webkit-backface-visibility:hidden;cursor:pointer;transition:filter .6s,border-color .6s}
+.walkaround-face img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.walkaround-face:not(.is-active){filter:brightness(.5) saturate(.75)}
+.walkaround-face.is-active{border-color:rgba(243,148,51,.6);cursor:grab}
+.walkaround-controls{display:flex;align-items:center;justify-content:center;gap:22px}
+.walkaround-arrow{display:grid;place-items:center;width:46px;height:46px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(255,255,255,.04);color:#fff;font-size:18px;cursor:pointer;transition:border-color .25s,color .25s,transform .25s}
+.walkaround-arrow:hover,.walkaround-arrow:focus-visible{border-color:var(--freight-gold);color:var(--freight-gold);transform:translateY(-2px)}
+.walkaround-caption{display:grid;justify-items:center;gap:9px;min-width:190px}
+.walkaround-caption b{color:#fff;font:700 13px var(--display);letter-spacing:.02em}
+.walkaround-dots{display:flex;gap:7px}
+.walkaround-dots button{width:8px;height:8px;padding:0;border:0;border-radius:999px;background:rgba(255,255,255,.28);cursor:pointer;transition:width .3s,background .3s}
+.walkaround-dots button[aria-current="true"]{width:24px;background:var(--freight-gold)}
+@media(max-width:620px){
+  .vehicle-flip .flip-inner{min-height:340px}
+  .flip-front-copy,.flip-back{padding:21px 20px}
+  .flip-front{display:flex;flex-direction:column}
+  .flip-photo{position:relative;height:auto;aspect-ratio:4/3}
+  .flip-front:after{display:none}
+  .flip-front-copy{height:auto;padding-top:16px}
+  .van-walkaround{margin-top:38px;padding-top:32px}
+  .walkaround-head{flex-direction:column;align-items:flex-start;gap:10px}
+  .walkaround-stage{--w:78vw;height:calc(var(--w) * .75 + 50px);-webkit-mask-image:none;mask-image:none}
+  .walkaround-ring{top:22px}
+  .walkaround-controls{gap:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .vehicle-flip .flip-inner,.walkaround-ring,.flip-photo{transition:none}
+}
+/* Full-width hero: background runs edge to edge, content lines up with the header container */
+.hero-transport.section-shell{width:100%;margin:0;border:0;border-bottom:1px solid rgba(255,255,255,.08);border-radius:0;padding-inline:max(clamp(18px,5vw,64px),calc((100% - var(--content)) / 2))}
+.hero-transport .scroll-cue{left:max(clamp(18px,5vw,64px),calc((100% - var(--content)) / 2))}
+@media(min-width:621px) and (max-width:1080px){
+  .hero-transport .float-card-top{top:-22px;left:10px}
+  .hero-transport .float-card-bottom{right:10px;bottom:-22px}
+  .hero-transport .visual-stamp{right:10px}
+  .hero-transport .hero-visual{margin-bottom:34px}
+}

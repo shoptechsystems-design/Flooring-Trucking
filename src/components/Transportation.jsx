@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+
 function Eyebrow({ children, light = false }) {
   return <p className={`eyebrow${light ? ' eyebrow-light' : ''}`}><span className="eyebrow-line" />{children}</p>;
 }
@@ -95,6 +97,116 @@ export function HeroSection() {
   );
 }
 
+function VehicleCard({ variant, label, title, teaser, photo, photoAlt, specs, body, link }) {
+  const [flipped, setFlipped] = useState(false);
+  return (
+    <article className={`vehicle-card vehicle-${variant} vehicle-flip tilt-card${flipped ? ' is-flipped' : ''}`}>
+      <div className="flip-inner">
+        <div className="flip-face flip-front" inert={flipped}>
+          <img className="flip-photo" src={photo} alt={photoAlt} width="1200" height="900" loading="lazy" decoding="async" />
+          <div className="flip-front-copy">
+            <span className="vehicle-label">{label}</span>
+            <h3>{title}</h3>
+            <p className="flip-teaser">{teaser}</p>
+            <button className="flip-toggle" type="button" onClick={() => setFlipped(true)}>View specs <span aria-hidden="true">↻</span></button>
+          </div>
+        </div>
+        <div className="flip-face flip-back" inert={!flipped}>
+          <span className="vehicle-label">{label}</span>
+          <div className="vehicle-icon" aria-hidden="true"><VehicleSvg van={variant === 'van'} /></div>
+          <h3>{title}</h3>
+          <dl className="vehicle-specs">
+            {specs.map(([term, value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}
+          </dl>
+          <p>{body}</p>
+          <div className="flip-back-actions">
+            <a href="#freight-form" className="text-link">{link} <span aria-hidden="true">→</span></a>
+            <button className="flip-toggle" type="button" onClick={() => setFlipped(false)}>Back to photo <span aria-hidden="true">↺</span></button>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+const vanShots = [
+  ['/images/fleet/van-passenger-side.webp', 'Passenger side', 'Side profile of the white Sprinter cargo van, passenger side.'],
+  ['/images/fleet/van-front.webp', 'Front', 'Front view of the Sprinter cargo van.'],
+  ['/images/fleet/van-front-quarter.webp', 'Front three-quarter', 'Front three-quarter view of the Sprinter van, driver side.'],
+  ['/images/fleet/van-driver-side.webp', 'Driver side', 'Side profile of the Sprinter van, driver side.'],
+  ['/images/fleet/van-passenger-side-loading.webp', 'Ready at the dock', 'The Sprinter van parked beside a loading stair, passenger side.'],
+];
+
+function VanWalkaround() {
+  // step is unbounded so the ring always turns the short way; the active shot is step mod count
+  const [step, setStep] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const swipeStart = useRef(null);
+  const swiped = useRef(false);
+  const count = vanShots.length;
+  const active = ((step % count) + count) % count;
+
+  useEffect(() => {
+    if (paused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const timer = window.setInterval(() => setStep((value) => value + 1), 4200);
+    return () => window.clearInterval(timer);
+  }, [paused]);
+
+  const goTo = (index) => {
+    let delta = index - active;
+    if (delta > count / 2) delta -= count;
+    if (delta < -count / 2) delta += count;
+    setStep((value) => value + delta);
+  };
+  const onPointerDown = (event) => { swipeStart.current = event.clientX; };
+  const onPointerUp = (event) => {
+    if (swipeStart.current === null) return;
+    const dx = event.clientX - swipeStart.current;
+    swipeStart.current = null;
+    swiped.current = Math.abs(dx) > 40;
+    if (swiped.current) setStep((value) => value + (dx < 0 ? 1 : -1));
+  };
+
+  return (
+    <div
+      className="van-walkaround"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Photos of the Sprinter van from every side"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <div className="walkaround-head">
+        <div><p className="eyebrow eyebrow-light"><span className="eyebrow-line" />Walk around the van</p><h3>Every side of the <em>Sprinter.</em></h3></div>
+        <p>Real photos of the van that shows up for your load.</p>
+      </div>
+      <div className="walkaround-stage" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => { swipeStart.current = null; }}>
+        <div className="walkaround-ring" style={{ '--angle': `${step * -360 / count}deg` }}>
+          {vanShots.map(([src, label, alt], index) => (
+            <figure key={src} className={`walkaround-face${index === active ? ' is-active' : ''}`} style={{ '--i': index }} aria-hidden={index !== active} onClick={() => { if (swiped.current) { swiped.current = false; return; } goTo(index); }}>
+              <img src={src} alt={alt} width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
+            </figure>
+          ))}
+        </div>
+      </div>
+      <div className="walkaround-controls">
+        <button type="button" className="walkaround-arrow" aria-label="Previous photo" onClick={() => setStep((value) => value - 1)}>←</button>
+        <div className="walkaround-caption">
+          <b aria-live="polite">{vanShots[active][1]}</b>
+          <div className="walkaround-dots">
+            {vanShots.map(([src, label], index) => (
+              <button key={src} type="button" aria-label={`Show ${label}`} aria-current={index === active} onClick={() => goTo(index)} />
+            ))}
+          </div>
+        </div>
+        <button type="button" className="walkaround-arrow" aria-label="Next photo" onClick={() => setStep((value) => value + 1)}>→</button>
+      </div>
+    </div>
+  );
+}
+
 export function EquipmentSection() {
   return (
     <section className="freight-section section-pad" id="freight" aria-labelledby="freight-title">
@@ -106,31 +218,31 @@ export function EquipmentSection() {
         </div>
         <div className="freight-showcase equipment-showcase">
           <div className="vehicle-grid">
-            <article className="vehicle-card vehicle-box tilt-card">
-              <span className="vehicle-label">26-FOOT BOX TRUCK · HIGH CAPACITY</span>
-              <div className="vehicle-icon" aria-hidden="true"><VehicleSvg /></div>
-              <h3>26-ft box truck</h3>
-              <dl className="vehicle-specs">
-                <div><dt>Box length</dt><dd>26 ft</dd></div>
-                <div><dt>Door opening</dt><dd>96″ W × 96″ H</dd></div>
-              </dl>
-              <p>Box truck transportation for local, regional, expedited and dedicated freight, including palletized shipments.</p>
-              <a href="#freight-form" className="text-link">Ask about box-truck capacity <span aria-hidden="true">→</span></a>
-            </article>
-            <article className="vehicle-card vehicle-van tilt-card">
-              <span className="vehicle-label">SPRINTER VAN · FLEXIBLE OPTION</span>
-              <div className="vehicle-icon" aria-hidden="true"><VehicleSvg van /></div>
-              <h3>Sprinter van</h3>
-              <dl className="vehicle-specs">
-                <div><dt>Cargo length</dt><dd>126″</dd></div>
-                <div><dt>Cargo width</dt><dd>55″</dd></div>
-                <div><dt>Cargo height</dt><dd>72″</dd></div>
-              </dl>
-              <p>Sprinter van transportation for smaller and expedited freight.</p>
-              <a href="#freight-form" className="text-link">Ask about Sprinter capacity <span aria-hidden="true">→</span></a>
-            </article>
+            <VehicleCard
+              variant="box"
+              label="26-FOOT BOX TRUCK · HIGH CAPACITY"
+              title="26-ft box truck"
+              teaser="26 ft box · 96″ × 96″ door"
+              photo="/images/lil-man-big-van-box-truck.jpg"
+              photoAlt="Lil Man Big Van's 26-foot box truck parked in Winston-Salem, NC."
+              specs={[['Box length', '26 ft'], ['Door opening', '96″ W × 96″ H']]}
+              body="Box truck transportation for local, regional, expedited and dedicated freight, including palletized shipments."
+              link="Ask about box-truck capacity"
+            />
+            <VehicleCard
+              variant="van"
+              label="SPRINTER VAN · FLEXIBLE OPTION"
+              title="Sprinter van"
+              teaser="126″ L × 55″ W × 72″ H cargo area"
+              photo="/images/fleet/van-driver-side.webp"
+              photoAlt="Lil Man Big Van's white Sprinter cargo van, driver side."
+              specs={[['Cargo length', '126″'], ['Cargo width', '55″'], ['Cargo height', '72″']]}
+              body="Sprinter van transportation for smaller and expedited freight."
+              link="Ask about Sprinter capacity"
+            />
           </div>
         </div>
+        <VanWalkaround />
         <div className="freight-capabilities"><span>Local &amp; regional</span><span>Palletized shipments</span><span>Expedited transportation</span><span>Dedicated loads</span><span>Equipment fit by shipment</span></div>
         <div className="equipment-action"><p>Not sure which option fits? Share the pickup, delivery and load details.</p><FreightButton>Request a Freight Quote</FreightButton></div>
       </div>
