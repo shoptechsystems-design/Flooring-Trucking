@@ -1,3 +1,3 @@
 export default {
-  logoUrl: "https://lilman-nshfmbfl.manus.space/images/logo/lil-man-big-van-logo.png",
+  logoUrl: "https://flooringforallusa.com/images/logo/lil-man-big-van-logo.png",
 };
